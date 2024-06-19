@@ -20,8 +20,8 @@ st.set_page_config(
 #####################################   
 from streamlit_option_menu import option_menu
 # horizontal Menu
-app = option_menu(None, ["Acceuil", "Tendances", "Dividende", 'Etats Financier', 'Contact'], 
-icons=['house', 'fire', "calculator-fill", 'graph-up-arrow', 'person-vcard-fill'], 
+app = option_menu(None, ["Acceuil", "Tendances", 'Etats Financier', 'Contact'], 
+icons=['house', 'fire', 'graph-up-arrow', 'person-vcard-fill'], 
 menu_icon="cast", default_index=0, orientation="horizontal")
 #app
 
