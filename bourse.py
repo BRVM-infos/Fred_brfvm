@@ -132,7 +132,15 @@ selected_country = st.sidebar.selectbox('Pays', countries)
 if selected_country:
     companies = df_main[df_main['Pays'] == selected_country]['Company_Name'].unique()
     selected_company = st.sidebar.selectbox('Entreprises' , companies)
-
+    with st.sidebar :
+        #st.write("La BRVM (Bourse Régionale des Valeurs Mobilières")
+        st.caption("""La BRVM (Bourse Régionale des Valeurs Mobilières) est une plateforme dynamique
+                    où les investisseurs découvrent des opportunités uniques pour capitaliser sur 
+                   la croissance économique et l innovation en Afrique de l Ouest""")
+        st.divider()
+        st.sidebar.markdown('''<a href="https://www.linkedin.com/in/alfred-diokou/" target="_blank"
+                             class="sidebar-caption"><i class="fab fa-linkedin linkedin-icon">
+                            </i> Alfred Diokou</a>''', unsafe_allow_html=True)
     st.markdown(f"""
                  <div class="pays">  {selected_company}  </div> """,
                    unsafe_allow_html=True)
