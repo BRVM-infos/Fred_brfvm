@@ -16,7 +16,19 @@ st.set_page_config(
     layout="wide", 
     page_title= "BRVM",  
     initial_sidebar_state="expanded")
+###################################
+# fixe theme
+ dark = '''
+<style>
+    .stApp {
+   background-color: #0c0a1a;
+    }
+</style>
+'''
+st.markdown(light, unsafe_allow_html=True)
 
+# Use a global variable to store the current theme
+st.session_state.theme = "dark"
 #####################################   
 from streamlit_option_menu import option_menu
 # horizontal Menu
