@@ -25,7 +25,7 @@ dark = '''
     }
 </style>
 '''
-st.markdown(light, unsafe_allow_html=True)
+st.markdown(dark, unsafe_allow_html=True)
 
 # Use a global variable to store the current theme
 st.session_state.theme = "dark"
