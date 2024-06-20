@@ -98,7 +98,9 @@ def plot_dividende(stock_data, company):
         yaxis_title='Prix FCFA',
         template='plotly_white',
         plot_bgcolor='rgba(0, 0, 0, 0.1)',  # Plot area background color
-        paper_bgcolor='rgba(0, 0, 0, 0.1)' # Overall background color
+        paper_bgcolor='rgba(0, 0, 0, 0.1)',# Overall background color
+        #width=400,  # Set the width here
+        height=350  # Set the height here
     )
     return fig
 
@@ -118,7 +120,9 @@ def plot_benefice(stock_data, company):
         yaxis_title='Million Fcfa',
         template='plotly_white',
          plot_bgcolor='rgba(0, 0, 0, 0.1)',  # Plot area background color
-        paper_bgcolor='rgba(0, 0, 0, 0.1)' # Overall background color
+        paper_bgcolor='rgba(0, 0, 0, 0.1)', # Overall background color
+        #width=400,  # Set the width here
+        height=350  # Set the height here
     )
     return fig
 
