@@ -18,7 +18,7 @@ st.set_page_config(
     initial_sidebar_state="expanded")
 ###################################
 # fixe theme
- dark = '''
+dark = '''
 <style>
     .stApp {
    background-color: #0c0a1a;
