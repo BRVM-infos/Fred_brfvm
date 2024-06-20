@@ -32,10 +32,17 @@ st.session_state.theme = "dark"
 #####################################   
 from streamlit_option_menu import option_menu
 # horizontal Menu
-app = option_menu(None, ["Acceuil", "Tendances", 'Etats Financier', 'Contact'], 
-icons=['house', 'fire', 'graph-up-arrow', 'person-vcard-fill'], 
-menu_icon="cast", default_index=0, orientation="horizontal")
-#app
+app = option_menu(None, ["Acceuil", "Tendances", 'Etats Financier'], 
+        icons=['house', 'fire', 'graph-up-arrow'], 
+        menu_icon="cast", default_index=0, orientation="horizontal",
+        styles={
+            "container": {"padding": "5!important","background-color":'black'},
+        "icon": {"color": "white", "font-size": "20px"}, 
+        "nav-link": {"color":"white","font-size": "16px", "text-align": "center", 
+        "margin":"0px", "--hover-color": "#605f77"},
+        "nav-link-selected": {"background-color": "#9f047e"}
+        }
+        )
 
 ####################################
 #st.header("BRVM") TO HIDDE FOOTER RUNNINF    #MainMenu {visibility: hidden;}
