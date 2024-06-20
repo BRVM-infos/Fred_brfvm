@@ -94,8 +94,8 @@ def plot_dividende(stock_data, company):
         #title=f'Dividende en FCFA ',
         title = {'text': "Dividende net", 
                             'font': {'color': 'lightgrey', 'size': 18} },
-        xaxis_title='Date',
-        yaxis_title='Prix FCFA',
+        xaxis=dict(fixedrange=True),  # Disable zoom on x-axis
+        yaxis=dict(fixedrange=True ), # Disable zoom on x-axis
         template='plotly_white',
         plot_bgcolor='rgba(0, 0, 0, 0.1)',  # Plot area background color
         paper_bgcolor='rgba(0, 0, 0, 0.1)',# Overall background color
@@ -116,8 +116,8 @@ def plot_benefice(stock_data, company):
       #  title=f'Bénéfice net',
        title = {'text': "Bénéfice net", 
                             'font': {'color': 'lightgrey', 'size': 18} },
-        xaxis_title='Date',
-        yaxis_title='Million Fcfa',
+        xaxis=dict(fixedrange=True),  # Disable zoom on x-axis
+        yaxis=dict(fixedrange=True ), # Disable zoom on x-axis
         template='plotly_white',
          plot_bgcolor='rgba(0, 0, 0, 0.1)',  # Plot area background color
         paper_bgcolor='rgba(0, 0, 0, 0.1)', # Overall background color
@@ -180,7 +180,7 @@ if selected_country:
                 
                      # Display description content
                      resume =  df_main[df_main['Company_Name'] == selected_company]['Description'].unique()[0]
-                     st.markdown(f"""
+                     st.caption(f"""
                         <div class="resume">{resume} </div> """,
                           unsafe_allow_html=True)
            
