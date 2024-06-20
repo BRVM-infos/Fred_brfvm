@@ -112,6 +112,10 @@ def plot_benefice(stock_data, company):
         y=stock_data['Resultat_net'],
         marker_color=colors
     ))
+    # Customize the x-axis to show all categories
+    fig.update_xaxes(
+        tick0=0,
+        dtick=1  #
     fig.update_layout(
       #  title=f'Bénéfice net',
        title = {'text': "Bénéfice net", 
