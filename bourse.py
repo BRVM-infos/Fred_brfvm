@@ -100,7 +100,7 @@ def plot_dividende(stock_data, company):
         plot_bgcolor='rgba(0, 0, 0, 0.1)',  # Plot area background color
         paper_bgcolor='rgba(0, 0, 0, 0.1)',# Overall background color
         #width=400,  # Set the width here
-        height=350  # Set the height here
+        height=350,  # Set the height here
         margin=dict(l=10, r=20, t=50, b=20),  # Adjust the margins around the plot
     )
     return fig
@@ -127,7 +127,7 @@ def plot_benefice(stock_data, company):
          plot_bgcolor='rgba(0, 0, 0, 0.1)',  # Plot area background color
         paper_bgcolor='rgba(0, 0, 0, 0.1)', # Overall background color
         #width=400,  # Set the width here
-        height=350  # Set the height here
+        height=350,  # Set the height here
         margin=dict(l=10, r=20, t=50, b=20),  # Adjust the margins around the plot
     )
     return fig
