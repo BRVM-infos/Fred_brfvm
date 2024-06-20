@@ -150,7 +150,7 @@ if selected_country:
                              class="sidebar-caption"><i class="fab fa-linkedin linkedin-icon">
                             </i> Alfred Diokou</a>''', unsafe_allow_html=True)
     st.markdown(f"""
-                 <div class="pays">  {selected_company}  </div> """,
+                 <div class="brvm">  {selected_company}  </div> """,
                    unsafe_allow_html=True)
 
     if selected_company:
@@ -178,7 +178,7 @@ if selected_country:
                           #    metric card
                 cart_pays=  df_main[df_main['Company_Name'] == selected_company]['Pays'].unique()[0]
                 st.markdown(f"""
-                        <div class="pays">{cart_pays} </div> """,
+                        <div class="brvm">{cart_pays} </div> """,
                           unsafe_allow_html=True)
                 with st.expander('A Propos', expanded=True):
                 
