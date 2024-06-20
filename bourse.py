@@ -92,7 +92,7 @@ def plot_dividende(stock_data, company):
     ))
     fig.update_layout(
         #title=f'Dividende en FCFA ',
-        title = {'text': "Dividende net", 
+        title = {'text': "Dividende net (Fcfa)", 
                             'font': {'color': 'lightgrey', 'size': 18} },
         xaxis=dict(fixedrange=True),  # Disable zoom on x-axis
         yaxis=dict(fixedrange=True ), # Disable zoom on x-axis
@@ -101,6 +101,7 @@ def plot_dividende(stock_data, company):
         paper_bgcolor='rgba(0, 0, 0, 0.1)',# Overall background color
         #width=400,  # Set the width here
         height=350  # Set the height here
+        margin=dict(l=10, r=20, t=50, b=20),  # Adjust the margins around the plot
     )
     return fig
 
@@ -118,7 +119,7 @@ def plot_benefice(stock_data, company):
         dtick=1 ) #
     fig.update_layout(
       #  title=f'Bénéfice net',
-       title = {'text': "Bénéfice net", 
+       title = {'text': "Bénéfice net (Million Fcfa)", 
                             'font': {'color': 'lightgrey', 'size': 18} },
         xaxis=dict(fixedrange=True),  # Disable zoom on x-axis
         yaxis=dict(fixedrange=True ), # Disable zoom on x-axis
@@ -127,6 +128,7 @@ def plot_benefice(stock_data, company):
         paper_bgcolor='rgba(0, 0, 0, 0.1)', # Overall background color
         #width=400,  # Set the width here
         height=350  # Set the height here
+        margin=dict(l=10, r=20, t=50, b=20),  # Adjust the margins around the plot
     )
     return fig
 
