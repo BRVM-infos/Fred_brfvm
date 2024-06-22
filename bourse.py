@@ -2,6 +2,7 @@ import pandas as pd
 import os
 os.system("") 
 import requests
+import re
 import streamlit as st
 from bs4 import BeautifulSoup
 
