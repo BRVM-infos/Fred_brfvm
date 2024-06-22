@@ -126,7 +126,7 @@ def plot_benefice(stock_data, company):
     colors = ['red' if val < 0 else 'green' for val in stock_data['Resultat_net']]
     fig = go.Figure()
     fig.add_trace(go.Bar(
-        x=stock_data['Date'],
+        x=(2019, 2020, 2021, 2022, 2023),
         y=stock_data['Resultat_net'],
         marker_color=colors
     ))
