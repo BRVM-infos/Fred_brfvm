@@ -174,8 +174,8 @@ if selected_country:
             <div class="action">Action : {action} Fcfa </div>
           </div>""",
              unsafe_allow_html=True)
-    companies = df_main[df_main['Pays'] == selected_country]['Company_Name'].unique()
-    selected_company = st.sidebar.selectbox('Entreprises' , companies)
+        companies = df_main[df_main['Pays'] == selected_country]['Company_Name'].unique()
+        selected_company = st.sidebar.selectbox('Entreprises' , companies)
     with st.sidebar :
         #st.write("La BRVM (Bourse Régionale des Valeurs Mobilières")
         st.caption("""La BRVM (Bourse Régionale des Valeurs Mobilières) est une plateforme dynamique
