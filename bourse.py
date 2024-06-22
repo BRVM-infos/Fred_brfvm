@@ -7,7 +7,6 @@ import streamlit as st
 from bs4 import BeautifulSoup
 
 import streamlit_shadcn_ui as ui
-#import matplotlib.pyplot as plt
 import plotly.express as px
 import plotly.graph_objects as go
 
@@ -48,7 +47,7 @@ app = option_menu(None, ["Acceuil", "Tendances", 'Etats Financier'],
         )
 
 ####################################
-#st.header("BRVM") TO HIDDE FOOTER RUNNINF    #MainMenu {visibility: hidden;}
+#TO HIDDE FOOTER RUNNINF   
 hide_st_style = """
             <style>
             #MainMenu {visibility: hidden;}
@@ -59,7 +58,7 @@ hide_st_style = """
 st.markdown(hide_st_style, unsafe_allow_html=True) 
  
 #####################################
-# Set up css file via fucntion
+
 # Function to load CSS from a file and inject it into the app
 def load_css(file_name):
      if os.path.exists(file_name):
@@ -72,12 +71,10 @@ def load_css(file_name):
 script_dir = os.path.dirname(os.path.abspath(__file__))
 os.chdir(script_dir)
         
-
 # Load the CSS file
 load_css('style.css')
-
-
-# Read csv file
+#######################################################################
+# Read csv file and preapare the data
 df_main = pd.read_csv('output.csv')
 
 # Extract unique countries and companies
@@ -90,12 +87,12 @@ for _, row in df_main.iterrows():
     pays = row['Pays']
     company_name = row['Company_Name']
     if pays not in pays_company_dict:
-        pays_company_dict[pays] = set()  # Use set to automatically handle duplicates
+        pays_company_dict[pays] = set()  
     pays_company_dict[pays].add(company_name)
 
 # Convert sets to lists in the dictionary
 country = {key: list(value) for key, value in pays_company_dict.items()}
-
+####################################################################################
 #******************* Définir les fonction graphiques*************
 
 def filter_data(df, country, company):
@@ -108,22 +105,20 @@ def plot_dividende(stock_data, company):
         x=stock_data['Date'], 
         y=stock_data['Dividende'], 
         mode='lines+markers', 
-        marker=dict(color='orange', size=20),  # Adjust marker size here
-        line=dict(color='grey'),  # Adjust line color if needed
+        marker=dict(color='orange', size=20),  
+        line=dict(color='grey'),  
         name='Dividende'
     ))
     fig.update_layout(
-        #title=f'Dividende en FCFA ',
         title = {'text': "Dividende net (Fcfa)", 
                             'font': {'color': 'lightgrey', 'size': 18} },
-        xaxis=dict(fixedrange=True),  # Disable zoom on x-axis
-        yaxis=dict(fixedrange=True ), # Disable zoom on x-axis
+        xaxis=dict(fixedrange=True),  
+        yaxis=dict(fixedrange=True ), 
         template='plotly_white',
-        plot_bgcolor='rgba(0, 0, 0, 0.1)',  # Plot area background color
-        paper_bgcolor='rgba(0, 0, 0, 0.1)',# Overall background color
-        #width=400,  # Set the width here
-        height=350,  # Set the height here
-        margin=dict(l=10, r=20, t=50, b=20),  # Adjust the margins around the plot
+        plot_bgcolor='rgba(0, 0, 0, 0.1)',  
+        paper_bgcolor='rgba(0, 0, 0, 0.1)',
+        height=350,  
+        margin=dict(l=10, r=20, t=50, b=20), 
     )
     return fig
 
@@ -140,23 +135,21 @@ def plot_benefice(stock_data, company):
         tick0=0,
         dtick=1 ) #
     fig.update_layout(
-      #  title=f'Bénéfice net',
        title = {'text': "Bénéfice net (Million Fcfa)", 
                             'font': {'color': 'lightgrey', 'size': 18} },
-        xaxis=dict(fixedrange=True),  # Disable zoom on x-axis
-        yaxis=dict(fixedrange=True ), # Disable zoom on x-axis
+        xaxis=dict(fixedrange=True),  
+        yaxis=dict(fixedrange=True ),
         template='plotly_white',
-         plot_bgcolor='rgba(0, 0, 0, 0.1)',  # Plot area background color
-        paper_bgcolor='rgba(0, 0, 0, 0.1)', # Overall background color
-        #width=400,  # Set the width here
-        height=350,  # Set the height here
-        margin=dict(l=10, r=20, t=50, b=20),  # Adjust the margins around the plot
+         plot_bgcolor='rgba(0, 0, 0, 0.1)',
+        paper_bgcolor='rgba(0, 0, 0, 0.1)',
+        height=350,  
+        margin=dict(l=10, r=20, t=50, b=20),  
     )
     return fig
-
+# Function help, to get real time action price of company !!!
 def price(url):
         
-           # Fetch HTML content
+    # Fetch HTML content
            response = requests.get(url)
           # Parse HTML content
            soup = BeautifulSoup(response.text, 'html.parser')
@@ -165,6 +158,7 @@ def price(url):
            elements = soup.find_all(class_=class_name)
 
            return  [element.text.strip() for element in elements][0].split(" ")[0].replace('XOF', '')
+############################################################################
 #************Side bar, main task of Appp*******
 
 # Sidebar - Country and Company Selection
@@ -177,7 +171,7 @@ if selected_country:
     companies = df_main[df_main['Pays'] == selected_country]['Company_Name'].unique()
     selected_company = st.sidebar.selectbox('Entreprises' , companies)
     with st.sidebar :
-        #st.write("La BRVM (Bourse Régionale des Valeurs Mobilières")
+        
         st.caption("""La BRVM (Bourse Régionale des Valeurs Mobilières) est une plateforme dynamique
                     où les investisseurs découvrent des opportunités uniques pour capitaliser sur 
                    la croissance économique et l innovation en Afrique de l Ouest""")
@@ -188,8 +182,7 @@ if selected_country:
 
 
     if selected_company:
-        ###########################################
-        #Price Action calculate of the select company
+        
         web = "https://www.sikafinance.com/marches/cotation_"
         car = df_main[df_main['Company_Name'] == selected_company]['Ticket'].unique()[0]
         url = web + car
@@ -216,7 +209,7 @@ if selected_country:
               st.plotly_chart(fig2)
         
         with cols[1] :
-                          #    metric card
+                  
                 cart_pays=  df_main[df_main['Company_Name'] == selected_company]['Pays'].unique()[0]
                 st.markdown(f"""
                         <div class="brvm">{cart_pays} </div> """,
