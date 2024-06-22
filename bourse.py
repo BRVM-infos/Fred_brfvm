@@ -183,10 +183,9 @@ if selected_country:
           # Parse HTML content
            soup = BeautifulSoup(response.text, 'html.parser')
            class_name = 'cot1u'  
-        
            elements = soup.find_all(class_=class_name)
 
-            return [element.text.strip() for element in elements][0]
+           return [element.text.strip() for element in elements][0]
         
         act = price()
         st.write(act)
