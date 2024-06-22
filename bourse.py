@@ -164,7 +164,7 @@ def price(url):
          # Extract data from the specified HTML class
            elements = soup.find_all(class_=class_name)
 
-           return  [element.text.strip() for element in elements][0]
+           return  [element.text.strip() for element in elements][0].split(" ")[0].replace('XOF', '')
 #************Side bar, main task of Appp*******
 
 # Sidebar - Country and Company Selection
