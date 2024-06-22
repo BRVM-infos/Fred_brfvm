@@ -178,7 +178,7 @@ if selected_country:
         #Price Action calculate of the select company
         from action import extract_data_from_class as price # local python file
         test = "https://www.sikafinance.com/marches/cotation_"
-        cac = df_main[df_main['Company_Name'] == selected_company]['Ticket'].unique()[0]
+        cac = df_main[df_main['Company_Name'] == selected_company]['Ticket'].unique()
         url = test + cac
         act = price(url)
         
