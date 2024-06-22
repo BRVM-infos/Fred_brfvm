@@ -21,7 +21,7 @@ st.set_page_config(
 dark = '''
 <style>
     .stApp {
-   background-color: #0c0a1a;
+   background: radial-gradient(#263882 16%, #29063c 40%, #09152f 55%, #0b0344 70%, #120a57 85%);
     }
 </style>
 '''
