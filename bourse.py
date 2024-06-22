@@ -154,7 +154,7 @@ def plot_benefice(stock_data, company):
     return fig
 
 def price(url:str):
-           web = "https://www.sikafinance.com/marches/cotation_"
+        
            # Fetch HTML content
            response = requests.get(url)
           # Parse HTML content
@@ -163,7 +163,7 @@ def price(url:str):
          # Extract data from the specified HTML class
            elements = soup.find_all(class_=class_name)
 
-           return  [element.text.strip() for element in elements][0].split(" ")[0].replace('XOF', '')
+           return  [element.text.strip() for element in elements][0]
 #************Side bar, main task of Appp*******
 
 # Sidebar - Country and Company Selection
@@ -189,7 +189,9 @@ if selected_country:
     if selected_company:
         ###########################################
         #Price Action calculate of the select company
+        web = "https://www.sikafinance.com/marches/cotation_"
         car = df_main[df_main['Company_Name'] == selected_company]['Ticket'].unique()[0]
+        url = web + car
         action = price(car)
         st.write(action)
         
