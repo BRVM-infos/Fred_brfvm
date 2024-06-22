@@ -84,4 +84,41 @@ body {
 
 }
 
+/* styles.css */
+.inline-div-container {
+    display: flex;
+    justify-content: flex-start;
+}
 
+.inline-div {
+    margin-right: 20px; /* Adjust this value to add more space between divs */
+    background: linear-gradient(0deg, #375038 0%, #1f83aa 100%);
+    color: rgb(214, 222, 231);
+    padding: 10px;
+    border-radius: 20px;
+    border-bottom-right-radius: 20px;
+    border-bottom-left-radius: 20px;
+    text-align: center;
+    font-size: 22px;
+    font-weight: bold;
+    margin-bottom: 18px;   
+    flex-direction: column;
+    justify-content: center; /* Center the content vertically */
+    display: inline-block; /* Adjusts background to content width */
+}   
+
+.action {
+    background: linear-gradient(0deg, #375038 0%, #1f83aa 100%);
+    color: rgb(214, 222, 231);
+    padding: 10px;
+    border-radius: 17px;
+    border-bottom-right-radius: 17px;
+    border-bottom-left-radius: 17px;
+    text-align: center;
+    font-size: 17px;
+    font-weight: bold;
+    margin-bottom: 15px;   
+    flex-direction: column;
+    justify-content: center; /* Center the content vertically */
+    display: inline-block; /* Adjusts background to content width */
+}
