@@ -171,9 +171,7 @@ if selected_country:
         st.sidebar.markdown('''<a href="https://www.linkedin.com/in/alfred-diokou/" target="_blank"
                              class="sidebar-caption"><i class="fab fa-linkedin linkedin-icon">
                             </i> Alfred Diokou</a>''', unsafe_allow_html=True)
-    st.markdown(f"""
-                 <div class="brvm">  {selected_company}  </div> """,
-                   unsafe_allow_html=True)
+
 
     if selected_company:
 
