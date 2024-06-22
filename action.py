@@ -35,6 +35,6 @@ def extract_data_from_class(url: str):
         
         elements = soup.find_all(class_=class_name)
 
-        return 20
+        return [element.text.strip() for element in elements]
 def test():
      return 5
