@@ -30,22 +30,9 @@ def extract_data_from_class(url: str):
 
         # Parse HTML content
         soup = BeautifulSoup(response.text, 'html.parser')
-        class_name = 'cot1u'  # Replace with the actual class name
-        # Extract data from the specified HTML class
+        class_name = 'cot1u'  
+        
         elements = soup.find_all(class_=class_name)
 
-        # Extract and return the text content of each element
-       # [element.text.strip() for element in elements]
+        return [element.text.strip() for element in elements][0].split(" ")[0]
 
-        return [element.text.strip() for element in elements][0].split(" ")[0].replace('XOF', '')
-
-# Example usage
-
-
-# Replace values in column 'B'  
-#df['Ticket'] = df['Ticket'].replace(replacement_dict)
-
-#st.write(df)
-# Save DataFrame to CSV
-#df.to_csv('output.csv', index=False)
-#st.write(df_main[df_main['Company_Name'] == selected_company]['Ticket'].unique()[0])
