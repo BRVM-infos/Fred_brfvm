@@ -188,6 +188,14 @@ if selected_country:
         url = web + car
         action = price(url)
         st.write(action)
+
+        # Display company name  with this price action
+        st.markdown(f"""
+          <div class="inline-div-container">
+            <div class="inline-div"> {selected_company} </div>
+            <div class="action">Action : {action} Fcfa </div>
+          </div>""",
+             unsafe_allow_html=True)
         
         # Column Division
         cols = st.columns([0.8, 0.2], gap='medium') 
