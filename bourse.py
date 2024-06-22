@@ -78,7 +78,7 @@ load_css('style.css')
 
 
 # Read csv file
-df_main = pd.read_csv('brvm.csv')
+df_main = pd.read_csv('output.csv')
 
 # Extract unique countries and companies
 country_uemoa = df_main['Pays'].unique()
