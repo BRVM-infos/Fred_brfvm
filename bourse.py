@@ -153,16 +153,17 @@ def plot_benefice(stock_data, company):
     )
     return fig
 
-def price():
+def price(url:str):
+           web = "https://www.sikafinance.com/marches/cotation_"
            # Fetch HTML content
-           url = "https://www.sikafinance.com/marches/cotation_BOAC.ci"
            response = requests.get(url)
           # Parse HTML content
            soup = BeautifulSoup(response.text, 'html.parser')
            class_name = 'cot1u'  
+         # Extract data from the specified HTML class
            elements = soup.find_all(class_=class_name)
 
-           return [element.text.strip() for element in elements][0]
+           return  [element.text.strip() for element in elements][0].split(" ")[0].replace('XOF', '')
 #************Side bar, main task of Appp*******
 
 # Sidebar - Country and Company Selection
@@ -188,13 +189,12 @@ if selected_country:
     if selected_company:
         ###########################################
         #Price Action calculate of the select company
+        car = df_main[df_main['Company_Name'] == selected_company]['Ticket'].unique()[0]
+        action = price(car)
+        st.write(action)
         
-        
-        act = price()
-        st.write(act)
         # Column Division
-        cols = st.columns([0.8, 0.2], gap='medium')
-        
+        cols = st.columns([0.8, 0.2], gap='medium') 
         filtered_data = filter_data(df_main, selected_country, selected_company)
         
         with cols[0] :
