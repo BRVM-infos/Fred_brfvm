@@ -154,7 +154,7 @@ def plot_benefice(stock_data, company):
     )
     return fig
 
-def price(url:str):
+def price(url):
         
            # Fetch HTML content
            response = requests.get(url)
