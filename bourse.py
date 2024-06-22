@@ -179,8 +179,7 @@ if selected_country:
         from action import extract_data_from_class as price # local python file
         test = "https://www.sikafinance.com/marches/cotation_"
         cac = df_main[df_main['Company_Name'] == selected_company]['Ticket'].unique()[0]
-        url = test + cac
-        action = price(url)
+        
         
         # Column Division
         cols = st.columns([0.8, 0.2], gap='medium')
