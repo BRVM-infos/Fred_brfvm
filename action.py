@@ -1,3 +1,4 @@
+import pandas as pd
 import os
 import requests
 from bs4 import BeautifulSoup
@@ -34,5 +35,6 @@ def extract_data_from_class(url: str):
         
         elements = soup.find_all(class_=class_name)
 
-        return elements
-
+        return 20
+def test():
+     return 5
