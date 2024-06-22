@@ -16,5 +16,5 @@ def extract_data_from_class():
         
         elements = soup.find_all(class_=class_name)
 
-        return [element.text.strip() for element in elements]
+        return [element.text.strip() for element in elements][0]
 
