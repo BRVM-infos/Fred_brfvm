@@ -193,7 +193,7 @@ if selected_country:
         web = "https://www.sikafinance.com/marches/cotation_"
         car = df_main[df_main['Company_Name'] == selected_company]['Ticket'].unique()[0]
         url = web + car
-        action = price(car)
+        action = price(url)
         st.write(action)
         
         # Column Division
