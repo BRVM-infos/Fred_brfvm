@@ -175,20 +175,6 @@ if selected_country:
 
     if selected_company:
 
-         #Price Action calculate of the select company
-        from action import extract_data_from_class as price # local python file
-        test = "https://www.sikafinance.com/marches/cotation_"
-        cac = df_main[df_main['Company_Name'] == selected_company]['Ticket'].unique()[0]
-        url = test + cac
-        action = price(url)
-        # Display Action price of select company
-        # Column Division
-        st.markdown(f"""
-          <div class="inline-div-container">
-            <div class="inline-div"> {selected_company} </div>
-            <div class="action">Action : {action} Fcfa </div>
-          </div>""",
-             unsafe_allow_html=True)
         # Column Division
         cols = st.columns([0.8, 0.2], gap='medium')
         
