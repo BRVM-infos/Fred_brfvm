@@ -181,7 +181,7 @@ if selected_country:
         cac = df_main[df_main['Company_Name'] == selected_company]['Ticket'].unique()[0]
         url = test + cac
         act = price(url)
-        
+        st.write(act)
         # Column Division
         cols = st.columns([0.8, 0.2], gap='medium')
         
