@@ -1,7 +1,9 @@
 import pandas as pd
 import os
 os.system("") 
+import requests
 import streamlit as st
+from bs4 import BeautifulSoup
 
 import streamlit_shadcn_ui as ui
 #import matplotlib.pyplot as plt
