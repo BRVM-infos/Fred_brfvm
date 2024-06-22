@@ -4,6 +4,8 @@ pandas
 streamlit
 streamlit_shadcn_ui
 streamlit_option_menu
-
-
+os
+bs4 
+requests
+re
 # Add other dependencies here
