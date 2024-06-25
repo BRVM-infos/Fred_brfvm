@@ -209,12 +209,12 @@ if selected_country:
 
             # Plot line chart in the first column
             with col1:
-              fig1 = plot_dividende(filtered_data, selected_company)
+              fig1 = plot_benefice(filtered_data, selected_company)
               st.plotly_chart(fig1)
 
             # Plot bar chart in the second column
             with col2:
-              fig2 = plot_benefice(filtered_data, selected_company)
+              fig2 = plot_dividende(filtered_data, selected_company)
               st.plotly_chart(fig2)
         
         with cols[1] :
