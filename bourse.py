@@ -75,7 +75,8 @@ os.chdir(script_dir)
 load_css('style.css')
 #######################################################################
 # Read csv file and preapare the data
-df_main = pd.read_csv('output.csv')
+#df_main = pd.read_csv('output.csv')
+df_main = pd.read_csv('output_1.csv')
 
 # Extract unique countries and companies
 country_uemoa = df_main['Pays'].unique()
@@ -191,8 +192,9 @@ if selected_country:
         # Display company name  with this price action
         st.markdown(f"""
           <div class="inline-div-container">
-            <div class="inline-div"> {selected_company} </div>
-            <div class="action">Action : {action} Fcfa </div>
+            <div class="inline-div"> {selected_company} </br> ({selected_country}) </div>
+            <div class="action">Action  <br/> {action} Fcfa </div>
+            <div class="action_1">Profit net T1 2024 </br> {rapport} </div>
           </div>""",
              unsafe_allow_html=True)
         
