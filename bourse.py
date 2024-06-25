@@ -188,7 +188,7 @@ if selected_country:
         car = df_main[df_main['Company_Name'] == selected_company]['Ticket'].unique()[0]
         url = web + car
         action = price(url)
-        
+        rapport = df_main[df_main['Company_Name'] == selected_company]['Trismestre'].unique()[0]
         # Display company name  with this price action
         st.markdown(f"""
           <div class="inline-div-container">
