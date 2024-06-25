@@ -219,10 +219,7 @@ if selected_country:
         
         with cols[1] :
                   
-                cart_pays=  df_main[df_main['Company_Name'] == selected_company]['Pays'].unique()[0]
-                st.markdown(f"""
-                        <div class="brvm">{cart_pays} </div> """,
-                          unsafe_allow_html=True)
+                
                 with st.expander('A Propos', expanded=True):
                 
                      # Display description content
