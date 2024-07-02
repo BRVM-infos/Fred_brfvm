@@ -6,4 +6,5 @@ streamlit_shadcn_ui
 streamlit_option_menu
 bs4 
 requests
+logging
 # Add other dependencies here
