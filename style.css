@@ -1,62 +1,26 @@
-body {
-    background-color: #f0f0f0; /* Change this to your desired background color */
-}
 
 /* styles.css */
-.title {
-    background: linear-gradient(0deg, #120656 0%, #430a61 100%);
-    color: white;
-    padding: 10px;
-    border-radius: 10px;
-    text-align: center;
-    font-size: 20px;
-    font-weight: bold;
-    margin-bottom: 20px;    
-    flex-direction: column;
-    justify-content: center; /* Center the content vertically */
-    display: inline-block; /* Adjusts background to content width */
-}
 
-.brvm {
-    background: linear-gradient(0deg, #375038 0%, #1f83aa 100%);
-    color: rgb(214, 222, 231);
-    padding: 10px;
-    border-radius: 20px;
-    border-bottom-right-radius: 20px;
-    border-bottom-left-radius: 20px;
-    text-align: center;
-    font-size: 22px;
-    font-weight: bold;
-    margin-bottom: 18px;   
-    flex-direction: column;
-    justify-content: center; /* Center the content vertically */
-    display: inline-block; /* Adjusts background to content width */
-}
 
-.graph {
-    background: linear-gradient(0deg, #375038 0%, #1f83aa 100%);
-    color: rgb(214, 222, 231);
-    padding: 10px;
-    border-radius: 10px;
-    text-align: center;
-    font-size: 15px;
-    font-weight: bold;
-    margin-bottom: 20px;    
-    flex-direction: column;
-    justify-content: center; /* Center the content vertically */
-    display: flex; /* Adjusts background to content width */
-}
+
 .resume{
-    color: #d1b9d49d;
+    color: rgb(0, 0, 0);
     font-size: 14px;
+    font-style: italic; /* Italic style */
     display: inline-block; /* Adjusts background to content width */
-    max-height: 200px;  /* Adjust this value as needed */
+    max-height: 160px;  /* Adjust this value as needed */
     overflow-y: auto;
 }
-
+.resume_ratio{
+    color: rgb(0, 0, 0);
+    font-size: 14px;
+    display: inline-block; /* Adjusts background to content width */
+    max-height: 100px;  /* Adjust this value as needed */
+    overflow-y: auto;
+}
 .stSelectbox:first-of-type {
-    background: linear-gradient(0deg, #0e011fb9 0%, #14201481 100%);
-    color: rgb(214, 222, 231);
+    background: linear-gradient(0deg, #fdfdff 0%, #ffffff 100%);
+    color: rgb(246, 247, 248);
     padding: 10px;
     border-radius: 14px;
     text-align: center;
@@ -71,7 +35,7 @@ body {
 
 .plot-container  {
     background: linear-gradient(0deg, #0e011fb9 0%, #14201481 100%);
-    color: rgb(214, 222, 231);
+    color: rgba(0, 0, 0, 0);
     padding: 10px;
     border-radius: 14px;
     text-align: center;
@@ -80,7 +44,7 @@ body {
     margin-bottom: 18px;    
     flex-direction: column;
     justify-content: center; /* Center the content vertically */
-    display: inline-block; /* Adjusts background to content width */
+    display: inline-block; /* Adjusts background to content width ()*/
 
 }
 /* styles.css */
@@ -90,9 +54,9 @@ body {
 }
 
 .inline-div {
-    margin-right: 200px; /* Adjust this value to add more space between divs */
+    margin-right: 150px; /* Adjust this value to add more space between divs */
     background: linear-gradient(0deg, #022525 20%, #020425 80%);    
-    color: rgb(214, 222, 231);
+    color:     rgb(214, 222, 231);
     padding: 10px;
     border-radius: 20px;
     border-bottom-right-radius: 20px;
@@ -107,16 +71,17 @@ body {
 }   
 
 .action {
-    margin-right: 200px; /* Adjust this value to add more space between divs */
-    background: linear-gradient(0deg, #022525 20%, #020425 80%);
-    color: rgb(214, 222, 231);
+    margin-right: 100px; /* Adjust this value to add more space between divs */
+    background: linear-gradient(0deg, #f8f8f8 20%, #f8f8fc 80%);
+    color: rgb(1, 13, 26);
     padding: 10px;
     border-radius: 20px;
     border-bottom-right-radius: 20px;
     border-bottom-left-radius: 20px;
     text-align: center;
-    font-size: 22px;
+    font-size: 17px;
     font-weight: bold;
+    font-family: 'Garamond', serif;
     margin-bottom: 18px;   
     flex-direction: column;
     justify-content: center; /* Center the content vertically */
@@ -124,18 +89,30 @@ body {
 }
 
 .action_1 {
-    background: linear-gradient(0deg, #022525 20%, #020425 80%);
-    color: rgb(214, 222, 231);
-    padding: 10px;
+    background: linear-gradient(0deg, #f8f8f8 20%, #f8f8fc 80%);
+    color: rgb(1, 13, 26);
     padding: 10px;
     border-radius: 20px;
     border-bottom-right-radius: 20px;
     border-bottom-left-radius: 20px;
     text-align: center;
-    font-size: 22px;
+    font-size: 17px;
     font-weight: bold;
+    font-family: 'Garamond', serif;
     margin-bottom: 18px;   
     flex-direction: column;
     justify-content: center; /* Center the content vertically */
-    display: inline-block; /* Adjusts background to content width */
+    display: inline-block; /* Adjusts background to content width *//
+}
+
+
+div[data-baseweb="select"] > div > div > div {
+    color: rgb(0, 0, 0); /* Change this to the desired color label selectbox*/
+    font-weight: bold; /* Optional: Makes the label bold */
+}
+
+/* styles.css */
+.css-1v0mbdj > div > label {
+    color: rgb(0, 0, 0); /* Change this to the desired color */
+    font-weight: bold; /* Optional: Makes the label bold */
 }
