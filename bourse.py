@@ -48,7 +48,7 @@ app = option_menu(None, ["Acceuil", "Tendances", 'Etats Financier'],
 
 ####################################
 #TO HIDDE FOOTER RUNNINF   
- hide_st_style = """
+hide_st_style = """
             <style>
             #MainMenu {visibility: hidden;}
             footer {visibility: hidden;}
