@@ -97,7 +97,7 @@ class MultiApp:
     # Set the title of the Streamlit app with a custom class
     with cl[1]:
         st.markdown(
-            '<div class="title">Outil d\' Analyse Pratique des Entreprises Cotées dans BRVM</div>',
+            '<div class="title">Outil Pratique, Analyse  des Entreprises Cotées dans BRVM</div>',
              unsafe_allow_html=True)
     with cl[0]:
         st.markdown("""
