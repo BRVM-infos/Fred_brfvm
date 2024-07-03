@@ -11,8 +11,8 @@ from all_functions import price, plot_benefice, plot_dividende, filter_data, his
 def app(df_main, sector):
  
   ################# TITLE & INTRODUCTION App ############
-  # Set the title of the Streamlit app in French
-  # Display the logo as the title
+  # Set the title of the Streamlit app
+  
   
   cols = st.columns([0.2,0.8], gap='large')
   with cols[0]:
