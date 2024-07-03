@@ -33,7 +33,7 @@
 .logo1 {
     width: 100%; /* Make the logo take the full width of its column */
     height: auto; /* Maintain the aspect ratio */
-    border-radius: 10px; /* Same border radius as title */
+    max-width: auto; /* Adjust the max width as needed */
     }
 
 .resume{
