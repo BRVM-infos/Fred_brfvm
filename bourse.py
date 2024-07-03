@@ -122,7 +122,7 @@ class MultiApp:
         )
 
 ## To add more space
-    fuck = st.columns([0.2,0.6, 0.2], gap='small')
+   fuck = st.columns([0.2,0.6, 0.2], gap='small')
    with fuck[0]:
             st.markdown("""
         <div class="logo">
