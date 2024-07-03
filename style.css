@@ -32,8 +32,9 @@
 }
 .logo1 {
   
-    height: auto; /* Maintain the aspect ratio */
+    height: 150px; /* Maintain the aspect ratio */
     max-width: 300px; /* Adjust the max width as needed */
+    
     }
 
 .resume{
