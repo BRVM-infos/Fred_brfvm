@@ -10,7 +10,7 @@ from bs4 import BeautifulSoup
 import requests
 import re
 
-import etat_financier, acceuil
+import etat_financier, acceuil, trends
 
 
    
@@ -54,8 +54,7 @@ st.markdown(hide_st_style, unsafe_allow_html=True)
 ############## Data Preparation ###################
 # Read csv file
 #df_main = pd.read_csv('output.csv')
-df_main = pd.read_csv('output_4.csv')
-
+df_main = pd.read_csv('output_7.csv')
 
 # Extract unique countries and Sector
 ticket = df_main['Ticket']
@@ -92,10 +91,25 @@ class MultiApp:
             "function": function
      })
     
+####### TITLE OF MY page###########
+# Set the title of the Streamlit app
+    cl = st.columns([0.2,0.6, 0.2], gap='small')
+    # Set the title of the Streamlit app with a custom class
+    with cl[1]:
+        st.markdown(
+            '<div class="title">Outil d\' Analyse Pratique des Entreprises Cotées dans BRVM</div>',
+             unsafe_allow_html=True)
+    with cl[0]:
+        st.markdown("""
+        <div class="logo">
+        <img src="https://bankassurafrik.com/wp-content/uploads/2017/09/echos-brvm-septembre-2.jpg" class="logo" alt="Logo">
+     </div>
+        """, unsafe_allow_html=True)
+    
     def run():
-
+    
     # horizontal Menu
-        app = option_menu(None, ["Acceuil",'Ratios Financier', 'Trends'], 
+        app = option_menu(None, ["Acceuil",'Ratios Financier', 'Chat avec tes PDF (IA)'], 
         icons=['house-fill', 'heart-pulse-fill', 'fire'], 
         menu_icon="cast", default_index=0, orientation="horizontal",
         styles={
@@ -106,11 +120,14 @@ class MultiApp:
         "nav-link-selected": {"background-color": "#f3e696"}
         }
         )
+      
     # navigat page to choosse
         if app == 'Acceuil':
             acceuil.app(df_main, countries)
         if app == 'Ratios Financier':
             etat_financier.app()
+        if app == 'Chat avec tes PDF (IA)':
+            trends.app()
         
     run()
 
