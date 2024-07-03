@@ -1,11 +1,39 @@
 
 /* styles.css */
+/* style.css */
+.column-content {
+    display: flex;
+    align-items: center;
+    height: 100%;
+}
+.title {
+    font-size: 23px; /* Adjust the font size */
+    color: #0d0485; /* Change to your preferred color */
+    text-align: center;
+    font-weight: bold;
+    margin-top: 22px;
+    margin-bottom: 20px;
+    font-family: 'Century Expanded', serif;
+    background: linear-gradient(0deg, #707772 0%, #e4e8a6 100%); /* Change to your preferred title background color */
+    padding: 10px; /* Add padding to make the background color more visible */
+    border-radius: 10px; /* Optional: Add rounded corners */
+    display: inline-block; /* Optional: Adjust display for better alignment */
+    height: 50px /*Add vertical space */
+    
+    
+}
 
-
+.logo {
+    width: 100%; /* Make the logo take the full width of its column */
+    height: auto; /* Maintain the aspect ratio */
+    max-width: 150px; /* Adjust the max width as needed */
+    border-radius: 10px; /* Same border radius as title */
+    height: 60px /*Add vertical space */
+}
 
 .resume{
     color: rgb(0, 0, 0);
-    font-size: 14px;
+    font-size: 15px;
     font-style: italic; /* Italic style */
     display: inline-block; /* Adjusts background to content width */
     max-height: 160px;  /* Adjust this value as needed */
@@ -13,10 +41,11 @@
 }
 .resume_ratio{
     color: rgb(0, 0, 0);
-    font-size: 14px;
+    font-size: 15px;
     display: inline-block; /* Adjusts background to content width */
     max-height: 100px;  /* Adjust this value as needed */
     overflow-y: auto;
+    
 }
 .stSelectbox:first-of-type {
     background: linear-gradient(0deg, #fdfdff 0%, #ffffff 100%);
