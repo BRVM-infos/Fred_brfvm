@@ -31,9 +31,9 @@
     height: 60px /*Add vertical space */
 }
 .logo1 {
-    width: 100%; /* Make the logo take the full width of its column */
+  
     height: auto; /* Maintain the aspect ratio */
-    max-width: auto; /* Adjust the max width as needed */
+    max-width: 300px; /* Adjust the max width as needed */
     }
 
 .resume{
