@@ -125,8 +125,7 @@ class MultiApp:
         fuck = st.columns([0.1,0.8, 0.1], gap='small')
         with fuck[0]:
             st.write("...")
-        with fuck[2]:
-            st.write("...")
+       
 
     # navigat page to choosse
         if app == 'Acceuil':
