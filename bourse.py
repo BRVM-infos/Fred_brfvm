@@ -114,7 +114,7 @@ class MultiApp:
         menu_icon="cast", default_index=0, orientation="horizontal",
         styles={
             "container": {"padding": "5!important" },
-        "icon": {"color": "white", "font-size": "20px"}, 
+        "icon": {"color": "#6b0000", "font-size": "20px"}, 
         "nav-link": {"color":"black","font-size": "16px","font-family": "Helvetica", "font-weight": "bold", "text-align": "center", 
         "margin":"0px", "--hover-color": "#605f77"},
         "nav-link-selected": {"background-color": "#f3e696"}
