@@ -109,7 +109,7 @@ class MultiApp:
     def run():
     
     # horizontal Menu
-        app = option_menu(None, ["Acceuil",'Ratios Financier', 'Chat avec tes PDF (IA)'], 
+        app = option_menu(None, ["Acceuil",'Ratios Financier', 'Dividende Simulator'], 
         icons=['house-fill', 'heart-pulse-fill', 'fire'], 
         menu_icon="cast", default_index=0, orientation="horizontal",
         styles={
@@ -132,7 +132,7 @@ class MultiApp:
             acceuil.app(df_main, countries)
         if app == 'Ratios Financier':
             etat_financier.app()
-        if app == 'Chat avec tes PDF (IA)':
+        if app == 'Dividende Simulator':
             trends.app()
         
     run()
