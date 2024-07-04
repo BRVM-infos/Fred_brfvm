@@ -5,21 +5,35 @@
     display: flex;
     align-items: center;
     height: 100%;
+    
 }
 .title {
     font-size: 23px; /* Adjust the font size */
     color: #0d0485; /* Change to your preferred color */
     text-align: center;
+    text-decoration: underline;
     font-weight: bold;
     margin-top: 22px;
     margin-bottom: 20px;
     font-family: 'Century Expanded', serif;
-    background: linear-gradient(0deg, #707772 0%, #e4e8a6 100%); /* Change to your preferred title background color */
+    background: linear-gradient(0deg, #e2b5db 0%, #e1e4c2 100%); /* Change to your preferred title background color */
     padding: 10px; /* Add padding to make the background color more visible */
     border-radius: 10px; /* Optional: Add rounded corners */
     display: inline-block; /* Optional: Adjust display for better alignment */
-    height: 50px /*Add vertical space */
     
+}
+.subheader {
+    font-size: 23px; /* Adjust the font size */
+    color: #08071a; /* Change to your preferred color */
+    text-align: center;
+    text-decoration: underline;
+    margin-top:18px;
+    margin-bottom: 20px;
+    font-family: 'Century Expanded', serif;
+    background: linear-gradient(0deg, #e2b5db 0%, #e1e4c2 100%); /* Change to your preferred title background color */
+    padding: 10px; /* Add padding to make the background color more visible */
+    border-radius: 10px; /* Optional: Add rounded corners */
+    display: inline-block; /* Optional: Adjust display for better alignment */
     
 }
 
@@ -29,13 +43,9 @@
     max-width: 150px; /* Adjust the max width as needed */
     border-radius: 10px; /* Same border radius as title */
     height: 60px /*Add vertical space */
-}
-.logo1 {
-  
-    height: 150px; /* Maintain the aspect ratio */
-    max-width: 300px; /* Adjust the max width as needed */
     
-    }
+    
+}
 
 .resume{
     color: rgb(0, 0, 0);
@@ -53,7 +63,9 @@
     overflow-y: auto;
     
 }
-.stSelectbox:first-of-type {
+
+
+.stSelectbox:nth-last-of-type(1) {
     background: linear-gradient(0deg, #fdfdff 0%, #ffffff 100%);
     color: rgb(246, 247, 248);
     padding: 10px;
@@ -68,7 +80,7 @@
 
 }
 
-.plot-container  {
+.plot-container   {
     background: linear-gradient(0deg, #0e011fb9 0%, #14201481 100%);
     color: rgba(0, 0, 0, 0);
     padding: 10px;
@@ -80,6 +92,7 @@
     flex-direction: column;
     justify-content: center; /* Center the content vertically */
     display: inline-block; /* Adjusts background to content width ()*/
+    
 
 }
 /* styles.css */
