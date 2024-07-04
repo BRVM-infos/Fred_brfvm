@@ -125,7 +125,7 @@ class MultiApp:
         
         with st.sidebar:
              st.divider()  # 👈 Draws a horizontal rule
-             st.markdown("👉 ALFRED DIOKOU")
+             st.markdown("👉 ALFRED DIOKOU 🕵️‍♀️")
     run()
 
 
