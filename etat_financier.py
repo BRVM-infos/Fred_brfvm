@@ -2,29 +2,15 @@ import streamlit as st
 import pandas as pd
 import streamlit_shadcn_ui as ui
 
-from bourse import df_main # import main dataframe
 from all_functions import plot_PER, filter_ratio
 
 
-df_main = df_main
-#df_main = pd.read_csv('output_6.csv')
-sector = df_main['Secteur'].unique()
-def app():
+def app(df_main, selected_company):
 
 
-    col = st.columns([0.2, 0.8], gap='medium')  
-
-    with col[0]:
-      selected_sector = st.selectbox('Secteur', sector)
-    #plot_PER()
-   
-      if selected_sector:
-        companies = df_main[df_main['Secteur'] == selected_sector]['Company_Name'].unique()
-        selected_company = st.selectbox('Entreprises' , companies)
-    
     
        
-    with col[1]:
+
         
         st.caption(f"""
                         <div class="resume_ratio">Les ratios financiers,
@@ -95,11 +81,4 @@ def app():
     
            )
 
-    ### Plot P.E.R Ratios  
-
-    go = st.columns([0.1, 0.4, 0.3], gap='medium')    
-    with go[1]:
-      filtered_data = filter_ratio(df_main, selected_sector, selected_company)
-      fig1 = plot_PER(filtered_data, selected_company) 
-      #st.plotly_chart(fig1)
-        
+    
