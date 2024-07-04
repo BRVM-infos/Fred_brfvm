@@ -43,6 +43,7 @@ st.markdown(dark, unsafe_allow_html=True)
 hide_st_style = """
             <style>
             #MainMenu {visibility: hidden;}
+            #viewerBadge_link__qRIco{visibility: hidden;}
             footer {visibility: hidden;}
             header {visibility: hidden;}
             </style>
@@ -58,7 +59,7 @@ df_main = pd.read_csv('output_7.csv')
 
 # Extract unique countries and Sector
 ticket = df_main['Ticket']
-country_uemoa = df_main['Secteur'].unique()
+sector = df_main['Secteur'].unique()
 company = df_main['Company_Name'].unique()
 
 # Create a dictionary to map each country in UEMOA to its list of unique companie
@@ -75,7 +76,7 @@ country = {key: list(value) for key, value in pays_company_dict.items()}
 
 
 # Sidebar - Country and Company Selection
-countries = country_uemoa
+countries = sector
 
 
 
@@ -93,48 +94,38 @@ class MultiApp:
     
 ####### TITLE OF MY page###########
 # Set the title of the Streamlit app
-    cl = st.columns([0.2,0.6, 0.2], gap='small')
-    # Set the title of the Streamlit app with a custom class
-    with cl[1]:
-        st.markdown(
-            '<div class="title">Outil Pratique, Analyse  des Entreprises Cotées dans BRVM</div>',
-             unsafe_allow_html=True)
-    with cl[0]:
-        st.markdown("""
-        <div class="logo">
-        <img src="https://github.com/ImageGalsen/Images/blob/67c82fe6fe5936b16deb8c14dba1419b0bf13fe5/first.jpg?raw=true" class="logo" alt="Logo">
-     </div>
-        """, unsafe_allow_html=True)
+    
     
     def run():
-   
+       
     # horizontal Menu
-        app = option_menu(None, ["Acceuil",'Ratios Financier', 'Dividende Simulator'], 
-        icons=['house-fill', 'heart-pulse-fill', 'fire'], 
-        menu_icon="cast", default_index=0, orientation="horizontal",
-        styles={
-            "container": {"padding": "5!important" },
-        "icon": {"color": "#6b0000", "font-size": "20px"}, 
-        "nav-link": {"color":"black","font-size": "16px","font-family": "Helvetica", "font-weight": "bold", "text-align": "center", 
+        with st.sidebar:
+            app = option_menu(None, ["Acceuil", 'Dividende Simulator'], 
+            icons=['house-fill', 'heart-pulse-fill', 'fire'], 
+            menu_icon="cast", default_index=0, orientation="vertical",
+            styles={
+            "container": {"padding": "5!important", 'background':'#a9acc3'},
+        "icon": {"color": "#6b0000  ", "font-size": "20px"}, 
+        "nav-link": {"color":"black","font-size": "14px","font-family": "Helvetica", "font-weight": "bold", "text-align": "left", 
         "margin":"0px", "--hover-color": "#605f77"},
         "nav-link-selected": {"background-color": "#f3e696"}
         }
         )
+        select_sector = st.sidebar.selectbox('Secteur', countries, key="first")
 
-## To add more space
-        fuck = st.columns([0.2,0.6, 0.2], gap='small')
-        with fuck[0]:
-            st.write("...")
+        if select_sector:
+         companies = df_main[df_main['Secteur'] == select_sector]['Company_Name'].unique()
+         selected_company = st.sidebar.selectbox('Entreprises' , companies, key="second")
        
-
     # navigat page to choosse
         if app == 'Acceuil':
-            acceuil.app(df_main, countries)
-        if app == 'Ratios Financier':
-            etat_financier.app()
+            acceuil.app(df_main, selected_company, select_sector)
         if app == 'Dividende Simulator':
             trends.app()
         
+        with st.sidebar:
+             st.divider()  # 👈 Draws a horizontal rule
+             st.markdown("👉 ALFRED DIOKOU")
     run()
 
 
