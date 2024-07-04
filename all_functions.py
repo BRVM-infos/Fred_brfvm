@@ -163,3 +163,118 @@ def history_variation(ticket):
     except requests.RequestException as e:
         print(f"An error occurred: {e}")
         return None
+
+def ratio_chart(value, title:str):
+# Value for the gauge
+ 
+
+# Define the gauge chart
+ fig = go.Figure(go.Indicator(
+    #title= "debt ratio",
+    mode="gauge+number",
+    value=value,
+    number={'font': {'size': 30, 'color': '#0addf0','weight': 'bold'}, 'suffix': " %"},
+    gauge={
+        'axis': {'range': [0, 100], 'visible': True},  # Hide axis values
+        'bar': {'color': "#0addf0"},
+        'bgcolor': "white",
+        'borderwidth': 2,
+        'bordercolor': "gray",
+        'steps': [
+            {'range': [0, 10], 'color': "#FF5D91"},
+            {'range': [10, 100], 'color': "#6BFF07"},
+             ],
+     }
+    ))
+ fig.update_layout(
+      
+        title = {'text': f" \t\t \t\t \t\t \t\t \t\t {title}",
+                            'font': {'color': 'grey', 'size': 18}},
+    
+        plot_bgcolor='#e8ebf1',  # Plot area background color
+        paper_bgcolor='#e8ebf1', # Overall background color
+        #width=290,  # Set the width here
+        height=220,  # Set the height here
+        margin=dict(l=10, r=20, t=50, b=20), # Adjust the margins around the plot
+    )
+
+
+ st.plotly_chart(fig)
+
+def current_ratio(value, title:str):
+# Value for the gauge
+ 
+
+# Define the gauge chart
+ fig = go.Figure(go.Indicator(
+    #title= "debt ratio",
+    mode="gauge+number",
+    value=round(value/100, 1),
+    number={'font': {'size': 30, 'color': '#0addf0','weight': 'bold'}},
+    gauge={
+        'axis': {'range': [0, 4], 'visible': True},  # Hide axis values
+        'bar': {'color': "#0addf0"},
+        'bgcolor': "white",
+        'borderwidth': 2,
+        'bordercolor': "gray",
+        'steps': [
+            {'range': [0, 1], 'color': "#FF5D91"},
+            {'range': [1, 4], 'color': "#6BFF07"},
+             ],
+     }
+    ))
+ fig.update_layout(
+      
+        title = {'text': f" \t\t \t\t \t\t \t\t \t\t {title}",
+                            'font': {'color': 'grey', 'size': 18}},
+    
+        plot_bgcolor='#e8ebf1',  # Plot area background color
+        paper_bgcolor='#e8ebf1', # Overall background color
+        #width=290,  # Set the width here
+        height=220,  # Set the height here
+        margin=dict(l=10, r=10, t=50, b=30), # Adjust the margins around the plot
+    )
+ 
+ 
+
+
+ st.plotly_chart(fig)
+
+def debt_ratio(value, title:str):
+# Value for the gauge
+ 
+
+# Define the gauge chart
+ fig = go.Figure(go.Indicator(
+    #title= "debt ratio",
+    mode="gauge+number",
+    value=round(value/100, 1),
+    number={'font': {'size': 30, 'color': '#0addf0','weight': 'bold'}},
+    gauge={
+        'axis': {'range': [0, 4], 'visible': True},  # Hide axis values
+        'bar': {'color': "#0addf0"},
+        'bgcolor': "white",
+        'borderwidth': 2,
+        'bordercolor': "gray",
+        'steps': [
+            {'range': [2, 12], 'color': "#FF5D91"},
+            {'range': [2, 0], 'color': "#6BFF07"},
+             ],
+     }
+    ))
+ fig.update_layout(
+      
+        title = {'text': f" \t\t \t\t \t\t \t\t \t\t {title}",
+                            'font': {'color': 'grey', 'size': 18}},
+    
+        plot_bgcolor='#e8ebf1',  # Plot area background color
+        paper_bgcolor='#e8ebf1', # Overall background color
+        #width=290,  # Set the width here
+        height=220,  # Set the height here
+        margin=dict(l=10, r=10, t=50, b=30), # Adjust the margins around the plot
+    )
+ 
+ 
+
+
+ st.plotly_chart(fig)
