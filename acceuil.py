@@ -216,13 +216,13 @@ def app(df_main, selected_company, select_sector):
             if val1 == 0 :
               st.write("Disponile Bientôt")
             elif select_sector == 'Secteur' :
-               debt_ratio(val1, 'Debt to Equity (D/E)')
+              debt_ratio_bank(val1, 'Debt to Equity (D/E)')
             else:
                debt_ratio(val1, 'Debt to Equity (D/E)')
           with balas[1]:
-           st.markdown('<span style="color:#FF5D91  ">■</span>  Low', unsafe_allow_html=True)
+           st.markdown('<span style="color:#6BFF07">■</span>  Low', unsafe_allow_html=True)          
            st.markdown('<span style="color:#a4f26f">■</span>  Moderate', unsafe_allow_html=True)
-           st.markdown('<span style="color:#6BFF07">■</span>  High', unsafe_allow_html=True)
+           st.markdown('<span style="color:#FF5D91  ">■</span>  High', unsafe_allow_html=True)
           with balas[4]:
            st.markdown('<span style="color:#FF5D91  ">■</span>  Low', unsafe_allow_html=True)
            st.markdown('<span style="color:#a4f26f">■</span>  Moderate', unsafe_allow_html=True)
