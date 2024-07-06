@@ -1,236 +1,332 @@
-import streamlit as st
 import pandas as pd
-from math import ceil
-import streamlit_shadcn_ui as ui
-from all_functions import price, plot_benefice, plot_dividende, filter_data,ratio_chart, current_ratio, debt_ratio
-from etat_financier import app
+import streamlit as st
+import plotly.graph_objects as go
+import requests
+from bs4 import BeautifulSoup
+import logging
+import re
 
 
+#******************* Définir les fonction graphiques*************
 
-
-#************Side bar, main task of Appp*******
-
-def app(df_main, selected_company, select_sector):
- 
-  ################# TITLE & INTRODUCTION App ############
-  # Set the title of the Streamlit app
-    st.markdown('<div class="title">Outil Pratique, Analyse des Entreprises Cotées dans BRVM</div>',
-             unsafe_allow_html=True)
+def filter_data(df, country, company):
+    filtered_df = df[(df['Secteur'] == country) & (df['Company_Name'] == company)]
+    return filtered_df
     
-    ddd = st.columns([0.9,0.1])
-    with ddd[1]:
-         st.markdown(".......")
-    dddd = st.columns([0.9,0.1])
-    with dddd[0]:
-         st.markdown(".......")
-       
- 
-    if selected_company:
-        #Price Action calculate of the select company
-        web = "https://www.sikafinance.com/marches/cotation_"
-        car = df_main[df_main['Company_Name'] == selected_company]['Ticket'].unique()[0]
-        url = web + car
-        action = price(url)
-        rapport = df_main[df_main['Company_Name'] == selected_company]['Trismestre'].unique()[0]
-        # Display Action price of select company
-        # Column Division
-        ol1, ol2, ol3 = st.columns(3)
+def filter_ratio(df, sector, company):
+    filtered_df = df[(df['Secteur'] == sector) & (df['Company_Name'] == company)]
+    return filtered_df
 
-        with ol1:
-            selected_country = df_main[df_main['Company_Name'] == selected_company]['Pays'].unique()[0]
-            st.markdown(f"""
-                <div class="action"> {selected_company} </br> ({selected_country}) </div>
-              """,
-             unsafe_allow_html=True)
-        with ol2:
-           st.markdown(f"""
-                <div class="action"> Action  <br/> {action} Fcfa </div>
-              """,
-             unsafe_allow_html=True)
-        with ol3:
-           st.markdown(f"""
-                <div class="action"> Profit net T1 2024 </br> {rapport} </div>
-              """,
-             unsafe_allow_html=True)
+def plot_dividende(stock_data, company):
+    fig = go.Figure()
+    fig.add_trace(go.Scatter(
+        x=stock_data['Date'], 
+        y=stock_data['Dividende'], 
+        mode='lines+markers',
+        marker=dict(color='#0addf0', size=20),  # Adjust marker size here
+        line=dict(color='grey'),  # Adjust line color if needed
+        name='Dividende',
         
-        filtered_data = filter_data(df_main, select_sector, selected_company)
-        fig1 = plot_benefice(filtered_data, selected_company)
-        fig2 = plot_dividende(filtered_data, selected_company)
+    ))
+    fig.update_layout(
+        #title=f'Dividende en FCFA ',
+        title = {'text': "Dividende net (Fcfa)", 
+                            'font': {'color': 'black','size': 18}},
+        xaxis=dict(fixedrange=True),  # Disable zoom on x-axis
+        yaxis=dict(fixedrange=True ), # Disable zoom on x-axis
+        template='plotly_white',
+        #plot_bgcolor='rgba(0, 0, 0, 0.1)',  # Plot area background color
+        #paper_bgcolor='rgba(0, 0, 0, 0.1)',# Overall background color
+        #width=400,  # Set the width here
+        height=350,  # Set the height here
+        margin=dict(l=10, r=20, t=50, b=20),  # Adjust the margins around the plot
+    )
+    return fig
+
+def plot_benefice(stock_data, company):
+    colors = ['#FF5D91' if val < 0 else '#6BFF07' for val in stock_data['Resultat_net']]
+    fig = go.Figure()
+    fig.add_trace(go.Bar(
+        x=stock_data['Date'],
+        y=stock_data['Resultat_net'],
+        marker_color=colors,
+        width=0.5
+    ))
+    # Customize the x-axis to show all categories
+    fig.update_xaxes(
+        tick0=0,
+        dtick=1 ) #
+    fig.update_layout(
+      #  title=f'Bénéfice net',
+       title = {'text': "Bénéfice net (Million Fcfa)", 
+                            'font': {'color': 'black', 'size': 18} },
+        xaxis=dict(fixedrange=True),  # Disable zoom on x-axis
+        yaxis=dict(fixedrange=True ), # Disable zoom on x-axis
+        bargap=0.0,  # Adjust the gap as needed 
+        template='plotly_white',
+         #plot_bgcolor='rgba(0, 0, 0, 0.1)',  # Plot area background color
+        #paper_bgcolor='rgba(0, 0, 0, 0.1)', # Overall background color
+        #width=400,  # Set the width here
+        height=350,  # Set the height here
+        margin=dict(l=10, r=20, t=50, b=20),  # Adjust the margins around the plot
+    )
+    return fig
+
+def price(url):
+           
+        
+    # Fetch HTML content
+           #response = requests.get(url)
+          # Parse HTML content
+           #soup = BeautifulSoup(response.text, 'html.parser')
+           class_name = 'cot1u'  
+           try:
+            response = requests.get(url)
+            response.raise_for_status()  # Raise an HTTPError for bad responses
+             # Parse HTML content
+            soup = BeautifulSoup(response.text, 'html.parser')
+        # Extract data from the specified HTML class
+            elements = soup.find_all(class_=class_name)
+            return   [element.text.strip() for element in elements][0].split(" ")[0].replace('XOF', '')
+
+           except requests.exceptions.RequestException as e:
+              logging.error(f"Error fetching data from {url}: {e}")
+              return "Désolé de l'erreur"
+         # Extract data from the specified HTML class
+           #lements = soup.find_all(class_=class_name)
+           
             
-             # Create columns for side-by-side charts
-        col1, col2 = st.columns(2)
+def plot_PER(stock_data, company):
+    fig = go.Figure()
+    fig.add_trace(go.Scatter(
+        x=['2019','2020', '2021', '2022', '2023'], 
+        y=stock_data['PER'], 
+        mode='lines+markers', 
+        marker=dict(color='orange', size=20),  # Adjust marker size here
+        line=dict(color='grey'),  # Adjust line color if needed
+        name='Dividende'
+    ))
+    fig.update_layout(
+        #title=f'Dividende en FCFA ',
+        title = {'text': "P.E.R", 
+                            'font': {'color': 'lightgrey', 'size': 18} },
+        xaxis=dict(fixedrange=True),  # Disable zoom on x-axis
+        yaxis=dict(fixedrange=True ), # Disable zoom on x-axis
+        template='plotly_white',
+        plot_bgcolor='rgba(0, 0, 0, 0.1)',  # Plot area background color
+        paper_bgcolor='rgba(0, 0, 0, 0.1)',# Overall background color
+        #width=400,  # Set the width here
+        height=350,  # Set the height here
+        margin=dict(l=10, r=20, t=50, b=20),  # Adjust the margins around the plot
+    )
+    return fig
 
-            # Plot line chart in the first column
-        with col1:
-              
-              st.plotly_chart(fig1)
+def history_variation(ticket):  
+    # Specify the URL of the webpage to scrape and the class name
+    url = 'https://www.sikafinance.com/marches/cotation_' + ticket
+    try:
+        response = requests.get(url)
+        response.raise_for_status()  # Check if the request was successful
 
-             
-        with col2:
+        # Parse the HTML content using BeautifulSoup
+        soup = BeautifulSoup(response.text, 'html.parser')
+        class_name = 'tableVar'  # Replace with the actual class name
 
-            st.plotly_chart(fig2)
-        dd = st.columns([0.5,0.5])
-        with dd[0]:
-           st.markdown("...")
-        ##### RATIOS #############
-        
-        
-        head = st.columns([0.3, 0.5,0.2], gap='medium')
-       
-        with head[1]:
-          st.markdown('<div class="subheader">Les Ratios Financier (Indicateurs) </div>',
-             unsafe_allow_html=True)
-          
-        op = st.columns([0.37, 0.3])
-        with op[0]:
-        # Define the tab options
-          options = ['Price Ratios','Liquidity Ratios', 'Leverage Ratios', 'Profitability Ratios']
-          # Create the tabs
-          selected_tab = ui.tabs(options=options, default_value='Price Ratios', key="kanaries")
-         
-        if selected_tab == 'Profitability Ratios':
-         with st.container(height=300, border=False):
-         
-          bol = st.columns([0.3, 0.1,0.05, 0.3, 0.1], gap='small')
-          
-          with bol[2]:
-             st.html(
-            '''
-                <div class="divider-vertical-line"></div>
-                <style>
-                    .divider-vertical-line {
-                        border-left: 3px solid rgba(49, 51, 63, 0.2);
-                        height: 100px;
-                        margin: auto;
-                        
-                    }
-                </style>
-            '''
-                )
-          with bol[3] :
-          
-            vo = df_main[df_main['Company_Name'] == selected_company]['profit_margin_ratio'].unique()[0]
-          
-            if vo == 0 :
-              st.write("Disponile Bientôt")
-            else:
-              ratio_chart(vo, 'Profit Margin Ratio', 5, 15)
-              
-          with bol[0] :
-            val3 = df_main[df_main['Company_Name'] == selected_company]['return_on_equity'].unique()[0].round(2)
-            val3 = int(val3)
-            if val3 == 0 :
-              st.write("Disponile Bientôt")
-            else:
-              ratio_chart(val3, 'Return on Equity (ROE)', 10, 20)
-          # Chart Legend
-          with bol[1]:
-           st.markdown('<span style="color:#FF5D91  ">■</span>  Low', unsafe_allow_html=True)
-           st.markdown('<span style="color:#a4f26f">■</span>  Moderate', unsafe_allow_html=True)
-           st.markdown('<span style="color:#6BFF07">■</span>  High', unsafe_allow_html=True)
-          with bol[4]:
-           st.markdown('<span style="color:#FF5D91  ">■</span>  Low', unsafe_allow_html=True)
-           st.markdown('<span style="color:#a4f26f">■</span>  Moderate', unsafe_allow_html=True)
-           st.markdown('<span style="color:#6BFF07">■</span>  High', unsafe_allow_html=True)
-        elif selected_tab == 'Liquidity Ratios':         
-         with st.container(height=300, border=False):
-          bal = st.columns([0.3, 0.1,0.05, 0.3, 0.1], gap='small')
-          with bal[0] :
-          
-            vol1 = df_main[df_main['Company_Name'] == selected_company]['current_ratio'].unique()[0].round(2)
-            vol1 = int(vol1)
-            if vol1 == 0 :
-              st.write("Disponile Bientôt")
-            else:
-              current_ratio(vol1, 'Current Ratio')
-          with bal[2]:
-             st.html(
-            '''
-                <div class="divider-vertical-line"></div>
-                <style>
-                    .divider-vertical-line {
-                        border-left: 3px solid rgba(49, 51, 63, 0.2);
-                        height: 100px;
-                        margin: auto;
-                        
-                    }
-                </style>
-            '''
-                )
-          with bal[3] :
-            vol3 = df_main[df_main['Company_Name'] == selected_company]['return_on_asset'].unique()[0].round(2)
-            vol3 = int(vol3)
-            if vol3 == 0 :
-              st.write("Disponile Bientôt")
-            else:
-              ratio_chart(vol3, 'Return on Asset (ROA)', 5, 10)
-          with bal[1]:
-           st.markdown('<span style="color:#FF5D91  ">■</span>  Low', unsafe_allow_html=True)
-           st.markdown('<span style="color:#a4f26f">■</span>  Moderate', unsafe_allow_html=True)
-           st.markdown('<span style="color:#6BFF07">■</span>  High', unsafe_allow_html=True)
-          with bal[4]:
-           st.markdown('<span style="color:#FF5D91  ">■</span>  Low', unsafe_allow_html=True)
-           st.markdown('<span style="color:#a4f26f">■</span>  Moderate', unsafe_allow_html=True)
-           st.markdown('<span style="color:#6BFF07">■</span>  High', unsafe_allow_html=True)
-        elif selected_tab == 'Price Ratios':         
-         with st.container(height=300, border=False):
-          bala = st.columns([0.3, 0.1,0.05, 0.3, 0.1], gap='small')
-              
-          with bala[3] :
-            vo1 = df_main[df_main['Company_Name'] == selected_company]['price_earning_ratio'].unique()[0]  
-            ratio_chart(vo1, 'Price Earning Ratio (PER)',15, 25)
+        # Find the specified class element
+        table = soup.find('table', class_=class_name)
+        if not table:
+            print(f"No table found with class name: {class_name}")
+            return None
 
-          with bala[0] :
-            div = list(df_main[df_main['Company_Name'] == selected_company]['Dividende'])[4]
-            vo2 = ceil((div/float(action.replace('\xa0', '').replace(',', '.')))*100)
-            ratio_chart(vo2, 'Dividende Yield',3, 5)
-          with bala[2]:
-             st.html(
-            '''
-                <div class="divider-vertical-line"></div>
-                <style>
-                    .divider-vertical-line {
-                        border-left: 3px solid rgba(49, 51, 63, 0.2);
-                        height: 100px;
-                        margin: auto;
-                        
-                    }
-                </style>
-            '''
-                )
-          with bala[1]:
-           st.markdown('<span style="color:#FF5D91  ">■</span>  Low', unsafe_allow_html=True)
-           st.markdown('<span style="color:#a4f26f">■</span>  Moderate', unsafe_allow_html=True)
-           st.markdown('<span style="color:#6BFF07">■</span>  High', unsafe_allow_html=True)
-          with bala[4]:
-           st.markdown('<span style="color:#FF5D91  ">■</span>  Low', unsafe_allow_html=True)
-           st.markdown('<span style="color:#a4f26f">■</span>  Moderate', unsafe_allow_html=True)
-           st.markdown('<span style="color:#6BFF07">■</span>  High', unsafe_allow_html=True)
-        elif selected_tab == 'Leverage Ratios':
-         with st.container(height=300, border=False):
-          balas = st.columns([0.3, 0.1,0.05, 0.3, 0.1], gap='small')
-      
-          with balas[0] :
-            val1 = df_main[df_main['Company_Name'] == selected_company]['debt_to_equity'].unique()[0].round(2)
-            val1 = int(val1)
-            if val1 == 0 :
-              st.write("Disponile Bientôt")
-            elif select_sector == 'Secteur' :
-               debt_ratio(val1, 'Debt to Equity (D/E)')
-            else:
-               debt_ratio(val1, 'Debt to Equity (D/E)')
-          with balas[1]:
-           st.markdown('<span style="color:#FF5D91  ">■</span>  Low', unsafe_allow_html=True)
-           st.markdown('<span style="color:#a4f26f">■</span>  Moderate', unsafe_allow_html=True)
-           st.markdown('<span style="color:#6BFF07">■</span>  High', unsafe_allow_html=True)
-          with balas[4]:
-           st.markdown('<span style="color:#FF5D91  ">■</span>  Low', unsafe_allow_html=True)
-           st.markdown('<span style="color:#a4f26f">■</span>  Moderate', unsafe_allow_html=True)
-           st.markdown('<span style="color:#6BFF07">■</span>  High', unsafe_allow_html=True)
-        
+        # Extract column names from <th> tags
+        headers = table.find_all('th')
+        columns = [header.get_text().strip() for header in headers]
 
-st.set_option('deprecation.showPyplotGlobalUse', False)
+        # Extract raw data from <tr> tags
+        rows = table.find_all('tr')[1:]  # Skip the header row
+        data = []
+        for row in rows:
+            cells = row.find_all('td')
+            row_data = [cell.get_text().strip() for cell in cells]
+            data.append(row_data)
 
+        # Create a DataFrame
+        df = pd.DataFrame(data, columns=columns)
+        # prompt: Avec le DataFrame df_annon: i like to use first column as index
+        df.set_index(df.columns[0], inplace=True)
+        # Apply the function to the DataFrame
+        #styled_df = df.style.apply(style_dataframe, axis=1)
+        # Display the styled DataFrame
+        #st.write('Performance')
+        #st.markdown(styled_df._repr_html_(), unsafe_allow_html=True)
+        return st.dataframe(df)
+
+    except requests.RequestException as e:
+        print(f"An error occurred: {e}")
+        return None
+
+def ratio_chart(value, title:str, l:int, m:int):
+# Value for the gauge
  
+
+# Define the gauge chart
+ fig = go.Figure(go.Indicator(
+    #title= "debt ratio",
+    mode="gauge+number",
+    value=value,
+    number={'font': {'size': 30, 'color': '#0addf0','weight': 'bold'}, 'suffix': " %"},
+    gauge={
+        'axis': {'range': [0, 100], 'visible': True},  # Hide axis values
+        'bar': {'color': "#0addf0"},
+        'bgcolor': "white",
+        'borderwidth': 2,
+        'bordercolor': "gray",
+        'steps': [
+            {'range': [0, l], 'color': "#FF5D91"},#RED
+            {'range': [l, m], 'color': "#a4f26f"},#lightgreen
+            {'range': [m, 100], 'color': "#6BFF07"},# GREEN
+             ],
+     }
+    ))
+ fig.update_layout(
+      
+        title = {'text': f" \t\t \t\t \t\t \t\t \t\t {title}",
+                            'font': {'color': 'grey', 'size': 18}},
     
-        
+        plot_bgcolor='#e8ebf1',  # Plot area background color
+        paper_bgcolor='#e8ebf1', # Overall background color
+        #width=290,  # Set the width here
+        height=220,  # Set the height here
+        margin=dict(l=10, r=20, t=50, b=20), # Adjust the margins around the plot
+    )
+
+
+ st.plotly_chart(fig)
+
+def current_ratio(value, title:str):
+# Value for the gauge
+ 
+
+# Define the gauge chart
+ fig = go.Figure(go.Indicator(
+    #title= "debt ratio",
+    mode="gauge+number",
+    value=round(value/100, 1),
+    number={'font': {'size': 30, 'color': '#0addf0','weight': 'bold'}},
+    gauge={
+        'axis': {'range': [0, 4], 'visible': True},  # Hide axis values
+        'bar': {'color': "#0addf0"},
+        'bgcolor': "white",
+        'borderwidth': 2,
+        'bordercolor': "gray",
+        'steps': [
+            {'range': [0, 1], 'color': "#FF5D91"},
+            {'range': [1, 4], 'color': "#6BFF07"},
+             ],
+     }
+    ))
+ fig.update_layout(
+      
+        title = {'text': f" \t\t \t\t \t\t \t\t \t\t {title}",
+                            'font': {'color': 'grey', 'size': 18}},
+    
+        plot_bgcolor='#e8ebf1',  # Plot area background color
+        paper_bgcolor='#e8ebf1', # Overall background color
+        #width=290,  # Set the width here
+        height=220,  # Set the height here
+        margin=dict(l=10, r=10, t=50, b=30), # Adjust the margins around the plot
+    )
+ 
+ 
+
+
+ st.plotly_chart(fig)
+
+def debt_ratio(value, title:str):
+# Value for the gauge
+ 
+
+# Define the gauge chart
+ fig = go.Figure(go.Indicator(
+    #title= "debt ratio",
+    mode="gauge+number",
+    value=round(value/100, 1),
+    number={'font': {'size': 30, 'color': '#0addf0','weight': 'bold'}},
+    gauge={
+        'axis': {'range': [0, 4], 'visible': True},  # Hide axis values
+        'bar': {'color': "#0addf0"},
+        'bgcolor': "white",
+        'borderwidth': 2,
+        'bordercolor': "gray",
+        'steps': [
+            {'range': [2, 12], 'color': "#FF5D91"},
+            {'range': [2, 0], 'color': "#6BFF07"},
+             ],
+     }
+    ))
+ fig.update_layout(
+      
+        title = {'text': f" \t\t \t\t \t\t \t\t \t\t {title}",
+                            'font': {'color': 'grey', 'size': 18}},
+    
+        plot_bgcolor='#e8ebf1',  # Plot area background color
+        paper_bgcolor='#e8ebf1', # Overall background color
+        #width=290,  # Set the width here
+        height=220,  # Set the height here
+        margin=dict(l=10, r=10, t=50, b=30), # Adjust the margins around the plot
+    )
+ 
+ 
+
+
+ st.plotly_chart(fig)
+
+ def per(ticket):
+    # Specify the URL of the webpage to scrape and the class name
+    url = 'https://www.sikafinance.com/marches/societe/' + ticket
+    try:
+        response = requests.get(url)
+        response.raise_for_status()  # Check if the request was successful
+
+        # Parse the HTML content using BeautifulSoup
+        soup = BeautifulSoup(response.text, 'html.parser')
+        class_name = 'tablenosort tbl100_6 tabSociete'  # Replace with the actual class name
+
+        # Find the specified class element
+        table = soup.find('table', class_=class_name)
+        if not table:
+            print(f"No table found with class name: {class_name}")
+            return None
+
+        # Extract column names from <th> tags
+        headers = table.find_all('th')
+        columns = [header.get_text().strip() for header in headers]
+
+        # Extract raw data from <tr> tags
+        rows = table.find_all('tr')[1:]  # Skip the header row
+        data = []
+        for row in rows:
+            cells = row.find_all('td')
+            row_data = [cell.get_text().strip() for cell in cells]
+            data.append(row_data)
+
+        # Create a DataFrame
+        df = pd.DataFrame(data, columns=columns)
+        df = df.T
+        # prompt: Avec le DataFrame df: code that use first raw as header
+        df.columns = df.iloc[0]
+        df = df.iloc[1:]
+        # Index to new column
+        df = df.reset_index()
+        # prompt: Avec le DataFrame df: replace name of column "index" to "date"
+        df = df.rename(columns={'index': 'date'})
+       # Extract the first row's data as a list
+       # Add the list as a new column
+        chiffre_d_affaire = df.iloc[:, 1].tolist()
+        df['chiffre'] = chiffre_d_affaire
+        new_df = df['PER'][3]
+        return float(new_df.replace(',', '.')
+)
+    except requests.RequestException as e:
+        print(f"An error occurred: {e}")
+        return None
