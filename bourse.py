@@ -122,8 +122,7 @@ class MultiApp:
     # navigat page to choosse
         # Navigate page to choose
         if app == 'Acceuil':
-         if hasattr(acceuil, 'app'):
-          print("app function exists in acceuil")
+         if hasattr(acceuil, 'app'):          
           acceuil.app(df_main, selected_company, select_sector)
          else:
            print("app function does not exist in acceuil")
