@@ -259,7 +259,7 @@ def debt_ratio(value, title:str):
         'borderwidth': 2,
         'bordercolor': "gray",
         'steps': [
-            {'range': [2, 10], 'color': "#FF5D91"}, # Red
+            {'range': [2, 12], 'color': "#FF5D91"}, # Red
             {'range': [1, 2], 'color': "#a4f26f"},#LighGreen
             {'range': [0, 1], 'color': "#6BFF07"}, #Green
              ],
