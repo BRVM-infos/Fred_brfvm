@@ -11,6 +11,7 @@ import requests
 import re
 
 import etat_financier, acceuil, trends
+from acceuil import app
 
 
    
@@ -119,7 +120,7 @@ class MultiApp:
        
     # navigat page to choosse
         if app == 'Acceuil':
-            acceuil.app(df_main, selected_company, select_sector)
+            app(df_main, selected_company, select_sector)
         if app == 'Dividende Simulator':
             trends.app()
         
