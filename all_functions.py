@@ -284,7 +284,7 @@ def debt_ratio(value, title:str):
 
  def debt_ratio_bank(value, title):
   # Define the gauge chart
- fig = go.Figure(go.Indicator(
+  fig = go.Figure(go.Indicator(
     #title= "debt ratio",
     mode="gauge+number",
     value=int(value/100),
@@ -302,7 +302,7 @@ def debt_ratio(value, title:str):
              ],
      }
     ))
- fig.update_layout(
+  fig.update_layout(
       
         title = {'text': f" \t\t \t\t \t\t \t\t \t\t {title}",
                             'font': {'color': 'grey', 'size': 18}},
@@ -314,5 +314,5 @@ def debt_ratio(value, title:str):
         margin=dict(l=10, r=10, t=50, b=30), # Adjust the margins around the plot
     )
  
- st.plotly_chart(fig)
+  st.plotly_chart(fig)
 
