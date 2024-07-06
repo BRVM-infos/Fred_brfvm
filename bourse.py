@@ -123,8 +123,8 @@ class MultiApp:
         # Navigate page to choose
         if app == 'Acceuil':
          if hasattr(acceuil, 'app'):
-         print("app function exists in acceuil")
-         acceuil.app(df_main, selected_company, select_sector)
+          print("app function exists in acceuil")
+          acceuil.app(df_main, selected_company, select_sector)
          else:
            print("app function does not exist in acceuil")
         if app == 'Dividende Simulator':
