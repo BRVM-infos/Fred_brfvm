@@ -253,7 +253,7 @@ def debt_ratio(value, title:str):
     value=round(value/100, 1),
     number={'font': {'size': 30, 'color': '#0addf0','weight': 'bold'}},
     gauge={
-        'axis': {'range': [0, 5], 'visible': True},  # Hide axis values
+        'axis': {'range': [0, 10], 'visible': True},  # Hide axis values
         'bar': {'color': "#0addf0"},
         'bgcolor': "white",
         'borderwidth': 2,
