@@ -253,14 +253,15 @@ def debt_ratio(value, title:str):
     value=round(value/100, 1),
     number={'font': {'size': 30, 'color': '#0addf0','weight': 'bold'}},
     gauge={
-        'axis': {'range': [0, 4], 'visible': True},  # Hide axis values
+        'axis': {'range': [0, 5], 'visible': True},  # Hide axis values
         'bar': {'color': "#0addf0"},
         'bgcolor': "white",
         'borderwidth': 2,
         'bordercolor': "gray",
         'steps': [
-            {'range': [2, 12], 'color': "#FF5D91"},
-            {'range': [2, 0], 'color': "#6BFF07"},
+            {'range': [2, 5], 'color': "#FF5D91"}, # Red
+            {'range': [1, 2], 'color': "#a4f26f"},#LighGreen
+            {'range': [0, 1], 'color': "#6BFF07"}, #Green
              ],
      }
     ))
@@ -281,52 +282,37 @@ def debt_ratio(value, title:str):
 
  st.plotly_chart(fig)
 
- def per(ticket):
-    # Specify the URL of the webpage to scrape and the class name
-    url = 'https://www.sikafinance.com/marches/societe/' + ticket
-    try:
-        response = requests.get(url)
-        response.raise_for_status()  # Check if the request was successful
+ def debt_ratio_bank(value, title):
+  # Define the gauge chart
+ fig = go.Figure(go.Indicator(
+    #title= "debt ratio",
+    mode="gauge+number",
+    value=int(value/100),
+    number={'font': {'size': 30, 'color': '#0addf0','weight': 'bold'}},
+    gauge={
+        'axis': {'range': [0, 25], 'visible': True},  # Hide axis values
+        'bar': {'color': "#0addf0"},
+        'bgcolor': "white",
+        'borderwidth': 2,
+        'bordercolor': "gray",
+        'steps': [
+            {'range': [15, 25], 'color': "#FF5D91"}, # Red
+            {'range': [10, 15], 'color': "#a4f26f"},#LighGreen
+            {'range': [0, 10], 'color': "#6BFF07"}, #Green
+             ],
+     }
+    ))
+ fig.update_layout(
+      
+        title = {'text': f" \t\t \t\t \t\t \t\t \t\t {title}",
+                            'font': {'color': 'grey', 'size': 18}},
+    
+        plot_bgcolor='#e8ebf1',  # Plot area background color
+        paper_bgcolor='#e8ebf1', # Overall background color
+        #width=290,  # Set the width here
+        height=220,  # Set the height here
+        margin=dict(l=10, r=10, t=50, b=30), # Adjust the margins around the plot
+    )
+ 
+ st.plotly_chart(fig)
 
-        # Parse the HTML content using BeautifulSoup
-        soup = BeautifulSoup(response.text, 'html.parser')
-        class_name = 'tablenosort tbl100_6 tabSociete'  # Replace with the actual class name
-
-        # Find the specified class element
-        table = soup.find('table', class_=class_name)
-        if not table:
-            print(f"No table found with class name: {class_name}")
-            return None
-
-        # Extract column names from <th> tags
-        headers = table.find_all('th')
-        columns = [header.get_text().strip() for header in headers]
-
-        # Extract raw data from <tr> tags
-        rows = table.find_all('tr')[1:]  # Skip the header row
-        data = []
-        for row in rows:
-            cells = row.find_all('td')
-            row_data = [cell.get_text().strip() for cell in cells]
-            data.append(row_data)
-
-        # Create a DataFrame
-        df = pd.DataFrame(data, columns=columns)
-        df = df.T
-        # prompt: Avec le DataFrame df: code that use first raw as header
-        df.columns = df.iloc[0]
-        df = df.iloc[1:]
-        # Index to new column
-        df = df.reset_index()
-        # prompt: Avec le DataFrame df: replace name of column "index" to "date"
-        df = df.rename(columns={'index': 'date'})
-       # Extract the first row's data as a list
-       # Add the list as a new column
-        chiffre_d_affaire = df.iloc[:, 1].tolist()
-        df['chiffre'] = chiffre_d_affaire
-        new_df = df['PER'][3]
-        return float(new_df.replace(',', '.')
-)
-    except requests.RequestException as e:
-        print(f"An error occurred: {e}")
-        return None
