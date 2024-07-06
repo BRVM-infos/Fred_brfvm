@@ -22,10 +22,11 @@ def plot_dividende(stock_data, company):
     fig.add_trace(go.Scatter(
         x=stock_data['Date'], 
         y=stock_data['Dividende'], 
-        mode='lines+markers', 
+        mode='lines+markers',
         marker=dict(color='#0addf0', size=20),  # Adjust marker size here
         line=dict(color='grey'),  # Adjust line color if needed
-        name='Dividende'
+        name='Dividende',
+        
     ))
     fig.update_layout(
         #title=f'Dividende en FCFA ',
@@ -164,7 +165,7 @@ def history_variation(ticket):
         print(f"An error occurred: {e}")
         return None
 
-def ratio_chart(value, title:str):
+def ratio_chart(value, title:str, l:int, m:int):
 # Value for the gauge
  
 
@@ -181,8 +182,9 @@ def ratio_chart(value, title:str):
         'borderwidth': 2,
         'bordercolor': "gray",
         'steps': [
-            {'range': [0, 10], 'color': "#FF5D91"},
-            {'range': [10, 100], 'color': "#6BFF07"},
+            {'range': [0, l], 'color': "#FF5D91"},#RED
+            {'range': [l, m], 'color': "#a4f26f"},#lightgreen
+            {'range': [m, 100], 'color': "#6BFF07"},# GREEN
              ],
      }
     ))
@@ -278,3 +280,53 @@ def debt_ratio(value, title:str):
 
 
  st.plotly_chart(fig)
+
+ def per(ticket):
+    # Specify the URL of the webpage to scrape and the class name
+    url = 'https://www.sikafinance.com/marches/societe/' + ticket
+    try:
+        response = requests.get(url)
+        response.raise_for_status()  # Check if the request was successful
+
+        # Parse the HTML content using BeautifulSoup
+        soup = BeautifulSoup(response.text, 'html.parser')
+        class_name = 'tablenosort tbl100_6 tabSociete'  # Replace with the actual class name
+
+        # Find the specified class element
+        table = soup.find('table', class_=class_name)
+        if not table:
+            print(f"No table found with class name: {class_name}")
+            return None
+
+        # Extract column names from <th> tags
+        headers = table.find_all('th')
+        columns = [header.get_text().strip() for header in headers]
+
+        # Extract raw data from <tr> tags
+        rows = table.find_all('tr')[1:]  # Skip the header row
+        data = []
+        for row in rows:
+            cells = row.find_all('td')
+            row_data = [cell.get_text().strip() for cell in cells]
+            data.append(row_data)
+
+        # Create a DataFrame
+        df = pd.DataFrame(data, columns=columns)
+        df = df.T
+        # prompt: Avec le DataFrame df: code that use first raw as header
+        df.columns = df.iloc[0]
+        df = df.iloc[1:]
+        # Index to new column
+        df = df.reset_index()
+        # prompt: Avec le DataFrame df: replace name of column "index" to "date"
+        df = df.rename(columns={'index': 'date'})
+       # Extract the first row's data as a list
+       # Add the list as a new column
+        chiffre_d_affaire = df.iloc[:, 1].tolist()
+        df['chiffre'] = chiffre_d_affaire
+        new_df = df['PER'][3]
+        return float(new_df.replace(',', '.')
+)
+    except requests.RequestException as e:
+        print(f"An error occurred: {e}")
+        return None
