@@ -55,7 +55,7 @@ st.markdown(hide_st_style, unsafe_allow_html=True)
 ############## Data Preparation ###################
 # Read csv file
 #df_main = pd.read_csv('output.csv')
-df_main = pd.read_csv('output_7.csv')
+df_main = pd.read_csv('output_8.csv')
 
 # Extract unique countries and Sector
 ticket = df_main['Ticket']
@@ -125,7 +125,7 @@ class MultiApp:
         
         with st.sidebar:
              st.divider()  # 👈 Draws a horizontal rule
-             st.markdown("👉 ALFRED DIOKOU 🕵️‍♀️")
+             st.markdown("👉 ALFRED DIOKOU")
     run()
 
 
