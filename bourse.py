@@ -10,7 +10,8 @@ from bs4 import BeautifulSoup
 import requests
 import re
 
-import etat_financier, acceuil, trends
+import  acceuil
+import trends
 
 
 
