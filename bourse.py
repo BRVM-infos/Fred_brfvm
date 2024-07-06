@@ -120,8 +120,13 @@ class MultiApp:
          selected_company = st.sidebar.selectbox('Entreprises' , companies, key="second")
        
     # navigat page to choosse
+        # Navigate page to choose
         if app == 'Acceuil':
-            acceuil.app(df_main, selected_company, select_sector)
+         if hasattr(acceuil, 'app'):
+         print("app function exists in acceuil")
+         acceuil.app(df_main, selected_company, select_sector)
+         else:
+           print("app function does not exist in acceuil")
         if app == 'Dividende Simulator':
             trends.app()
         
