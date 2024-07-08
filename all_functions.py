@@ -4,6 +4,7 @@ import plotly.graph_objects as go
 import requests
 from bs4 import BeautifulSoup
 import logging
+import plotly.express as px
 import re
 
 
@@ -242,10 +243,7 @@ def current_ratio(value, title:str):
 
  st.plotly_chart(fig)
 
-def debt_ratio(value, title:str):
-# Value for the gauge
- 
-
+def debt_ratio(value, title:str): 
 # Define the gauge chart
  fig = go.Figure(go.Indicator(
     #title= "debt ratio",
@@ -253,13 +251,13 @@ def debt_ratio(value, title:str):
     value=round(value/100, 1),
     number={'font': {'size': 30, 'color': '#0addf0','weight': 'bold'}},
     gauge={
-        'axis': {'range': [0, 12], 'visible': True},  # Hide axis values
+        'axis': {'range': [0, 5], 'visible': True},  # Hide axis values
         'bar': {'color': "#0addf0"},
         'bgcolor': "white",
         'borderwidth': 2,
         'bordercolor': "gray",
         'steps': [
-            {'range': [2, 12], 'color': "#FF5D91"}, # Red
+            {'range': [2, 5], 'color': "#FF5D91"}, # Red
             {'range': [1, 2], 'color': "#a4f26f"},#LighGreen
             {'range': [0, 1], 'color': "#6BFF07"}, #Green
              ],
@@ -277,14 +275,11 @@ def debt_ratio(value, title:str):
         margin=dict(l=10, r=10, t=50, b=30), # Adjust the margins around the plot
     )
  
- 
-
-
  st.plotly_chart(fig)
 
- def debt_ratio_bank(value, title):
+def debt_ratio_bank(value, title):
   # Define the gauge chart
-  fig = go.Figure(go.Indicator(
+ fig = go.Figure(go.Indicator(
     #title= "debt ratio",
     mode="gauge+number",
     value=int(value/100),
@@ -302,7 +297,7 @@ def debt_ratio(value, title:str):
              ],
      }
     ))
-  fig.update_layout(
+ fig.update_layout(
       
         title = {'text': f" \t\t \t\t \t\t \t\t \t\t {title}",
                             'font': {'color': 'grey', 'size': 18}},
@@ -314,5 +309,64 @@ def debt_ratio(value, title:str):
         margin=dict(l=10, r=10, t=50, b=30), # Adjust the margins around the plot
     )
  
-  st.plotly_chart(fig)
+ st.plotly_chart(fig)
+
+def pie_chart(labels, values):
+   # Create the pie chart using Plotly with added styles
+ fig = px.pie(names=labels, values=values, title='Interactive Pie Chart')
+
+ # Update the layout for better style and interactivity
+ fig.update_traces(
+    textposition='inside',  # Positioning text inside
+     textinfo='percent',  # Display the value and percentage inside the pie slices
+    marker=dict(
+        colors=px.colors.qualitative.Pastel,  # Use pastel colors
+        line=dict(color='#000000', width=2)  # Black border around slices
+    ),
+    pull=[0.1, 0, 0, 0]  # Slightly pull out the first slice
+)
+
+ # Customize the title and legend
+ fig.update_layout(
+    title={
+        'text': 'Principaux \t Investisseurs ',
+        'y': 0.95,  # Position the title near the top
+        'x': 0.5,  # Center the title horizontally
+        'xanchor': 'center',  # Align the title to the center horizontally
+        'yanchor': 'top' , # Align the title to the top vertically
+        'font': {
+            'family': 'Bodoni, serif',  # Set the font-family
+            'size': 20 
+         } # Set the font size
+    },
+    #title_font_size=20,
+    legend_title_text='Actionnaire',
+    legend=dict(
+        x=1,  # Position legend to the right
+        y=1,  # Position legend to the top
+        xanchor='left',  # Align the legend to the left of the x position
+        yanchor='top',  # Align the legend to the top of the y position
+        bgcolor='rgba(255, 255, 255, 0.5)',
+        bordercolor='rgba(0, 0, 0, 0.1)'
+    )
+ )
+
+
+ st.plotly_chart(fig)
+
+ # Placeholder for click info
+ click_info = st.empty()
+
+ # Callback function to display details on click
+ def display_click(trace, points, state):
+    if points.point_inds:
+        click_text = points.point_inds[0]  # Get the index of the clicked slice
+        category = values[click_text]
+        value = values[click_text]
+        click_info.text(f"Clicked on: {category} - Value: {value}")
+
+ # Attach the callback function to the pie chart
+ fig.data[0].on_click(display_click)
+
+
 
