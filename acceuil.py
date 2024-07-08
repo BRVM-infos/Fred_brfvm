@@ -3,8 +3,8 @@ import pandas as pd
 from math import ceil
 import streamlit_shadcn_ui as ui
 from all_functions import price, plot_benefice, plot_dividende, filter_data,ratio_chart, current_ratio, debt_ratio
-
-
+from all_functions import debt_ratio_bank, pie_chart
+import pickle
 
 
 
@@ -132,7 +132,9 @@ def app(df_main, selected_company, select_sector):
            st.markdown('<span style="color:#FF5D91  ">■</span>  Low', unsafe_allow_html=True)
            st.markdown('<span style="color:#a4f26f">■</span>  Moderate', unsafe_allow_html=True)
            st.markdown('<span style="color:#6BFF07">■</span>  High', unsafe_allow_html=True)
+        
         elif selected_tab == 'Liquidity Ratios':         
+        
          with st.container(height=300, border=False):
           bal = st.columns([0.3, 0.1,0.05, 0.3, 0.1], gap='small')
           with bal[0] :
@@ -172,7 +174,9 @@ def app(df_main, selected_company, select_sector):
            st.markdown('<span style="color:#FF5D91  ">■</span>  Low', unsafe_allow_html=True)
            st.markdown('<span style="color:#a4f26f">■</span>  Moderate', unsafe_allow_html=True)
            st.markdown('<span style="color:#6BFF07">■</span>  High', unsafe_allow_html=True)
+        
         elif selected_tab == 'Price Ratios':         
+        
          with st.container(height=300, border=False):
           bala = st.columns([0.3, 0.1,0.05, 0.3, 0.1], gap='small')
               
@@ -181,7 +185,7 @@ def app(df_main, selected_company, select_sector):
             ratio_chart(vo1, 'Price Earning Ratio (PER)',15, 25)
 
           with bala[0] :
-            div = list(df_main[df_main['Company_Name'] == selected_company]['Dividende'])[4]
+            div = list(df_main[df_main['Company_Name'] == selected_company]['Dividende'])[4]           
             vo2 = ceil((div/float(action.replace('\xa0', '').replace(',', '.')))*100)
             ratio_chart(vo2, 'Dividende Yield',3, 5)
           with bala[2]:
@@ -206,7 +210,9 @@ def app(df_main, selected_company, select_sector):
            st.markdown('<span style="color:#FF5D91  ">■</span>  Low', unsafe_allow_html=True)
            st.markdown('<span style="color:#a4f26f">■</span>  Moderate', unsafe_allow_html=True)
            st.markdown('<span style="color:#6BFF07">■</span>  High', unsafe_allow_html=True)
+        
         elif selected_tab == 'Leverage Ratios':
+        
          with st.container(height=300, border=False):
           balas = st.columns([0.3, 0.1,0.05, 0.3, 0.1], gap='small')
       
@@ -215,10 +221,11 @@ def app(df_main, selected_company, select_sector):
             val1 = int(val1)
             if val1 == 0 :
               st.write("Disponile Bientôt")
-            elif select_sector == 'Secteur' :
-              debt_ratio_bank(val1, 'Debt to Equity (D/E)')
+            elif select_sector == 'Bancaire' :
+               debt_ratio_bank(val1, 'Debt to Equity (D/E)')
             else:
                debt_ratio(val1, 'Debt to Equity (D/E)')
+
           with balas[1]:
            st.markdown('<span style="color:#6BFF07">■</span>  Low', unsafe_allow_html=True)          
            st.markdown('<span style="color:#a4f26f">■</span>  Moderate', unsafe_allow_html=True)
@@ -228,7 +235,29 @@ def app(df_main, selected_company, select_sector):
            st.markdown('<span style="color:#a4f26f">■</span>  Moderate', unsafe_allow_html=True)
            st.markdown('<span style="color:#6BFF07">■</span>  High', unsafe_allow_html=True)
         
+        cool = st.columns([0.3, 0.5,0.2], gap='medium')
+       
+        with cool[1]:
+          st.markdown('<div class="subheader">Société et Actionnaire </div>',
+             unsafe_allow_html=True)
+        #with st.container(height=300, border=False):
+          
+        dub = st.columns([0.7, 0.3])
+        with dub[0]:
 
+          # Open the file containing the dictionary
+           with open('actionnaire.pkl', 'rb') as f:
+          # Load the dictionary from the file
+            dict_df = pickle.load(f)
+            label = df_main[df_main['Company_Name'] == selected_company]['Ticket'].unique()[0]
+            df = dict_df[label]
+            pie_chart(df['Actionnaire'].tolist(), df['Value'].tolist())
+
+           with dub[1]:
+            profile = df_main[df_main['Company_Name'] == selected_company]['Description'].unique()[0]
+            st.caption(f"""
+                        <div class="resume">{profile} </div> """,
+                          unsafe_allow_html=True)
 st.set_option('deprecation.showPyplotGlobalUse', False)
 
  
