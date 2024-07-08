@@ -10,9 +10,7 @@ from bs4 import BeautifulSoup
 import requests
 import re
 
-import  acceuil
-import trends
-
+import  acceuil, trends
 
 
    
@@ -122,21 +120,28 @@ class MultiApp:
     # navigat page to choosse
         # Navigate page to choose
         if app == 'Acceuil':
-         if hasattr(acceuil, 'app'):          
-          acceuil.app(df_main, selected_company, select_sector)
-         else:
-           print("app function does not exist in acceuil")
+            if hasattr(acceuil, 'app'):                
+                acceuil.app(df_main, selected_company, select_sector)
+        else:
+            print("app function does not exist in acceuil")
         if app == 'Dividende Simulator':
             trends.app()
         
         with st.sidebar:
              st.divider()  # 👈 Draws a horizontal rule
-             st.markdown("👉 ALFRED DIOKOU")
+             ui.link_button(text="🔥 ALFRED DIOKOU ", url="https://www.linkedin.com/in/alfred-diokou/", key="link_btn")
+
+
     run()
 
+# Load dictionnaire from local storage
+    import pickle
 
-
- 
+    # Open the file containing the dictionary
+    with open('actionnaire.pkl', 'rb') as f:
+    # Load the dictionary from the file
+        dict_df = pickle.load(f)
+   
 #####################################
 # Set up css file via fucntion
 # Function to load CSS from a file and inject it into the app
