@@ -254,7 +254,7 @@ def app(df_main, selected_company, select_sector):
             pie_chart(df['Actionnaire'].tolist(), df['Value'].tolist())
 
         with dub[1]:
-           with st.expander('Histoire de l\'Entreprise', expanded=True): 
+           with st.expander('Présenetation de l\'Entreprise', expanded=True): 
              profile = df_main[df_main['Company_Name'] == selected_company]['Description'].unique()[0]
              st.caption(f"""
                         <div class="resume">{profile} </div> """,
