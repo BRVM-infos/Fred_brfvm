@@ -259,7 +259,7 @@ def app(df_main, selected_company, select_sector):
              st.caption(f"""
                         <div class="resume">{profile} </div> """,
                           unsafe_allow_html=True)
-st.set_option('deprecation.showPyplotGlobalUse', False)
+#st.set_option('deprecation.showPyplotGlobalUse', False)
 
  
     
